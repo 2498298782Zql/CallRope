@@ -1,0 +1,13 @@
+zql\CallRope\core\adaptor\MethodAdaptorImpl.class
+zql\CallRope\core\model\LogInfo.class
+zql\CallRope\core\model\Span.class
+zql\CallRope\core\instrumentation\CallRopeClassfileTransformer.class
+zql\CallRope\core\aspect\SpyImpl.class
+zql\CallRope\core\model\LogType.class
+zql\CallRope\core\aspect\aspectImpl\SpringFrameworkAspectImpl.class
+zql\CallRope\core\aspect\MethodAspect.class
+zql\CallRope\core\aspect\FrameworkAspect.class
+zql\CallRope\core\model\SpanEnvironment.class
+zql\CallRope\core\aspect\aspectImpl\MethodAspectImpl.class
+zql\CallRope\core\adaptor\ClassAdaptor.class
+zql\CallRope\core\util\JavassistUtils.class

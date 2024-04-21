@@ -24,6 +24,24 @@ public class SpyAPI {
         inited = false;
     }
 
+    public static void atEnter(Class<?> clazz, String methodInfo, Object target, Object[] args) {
+        spyInstance.atEnter(clazz, methodInfo, target, args);
+    }
+
+    public static void atExit(Class<?> clazz, String methodInfo, Object target, Object[] args,
+                              Object returnObject) {
+        spyInstance.atExit(clazz, methodInfo, target, args, returnObject);
+    }
+
+    public static void atExceptionExit(Class<?> clazz, String methodInfo, Object target,
+                                       Object[] args, Throwable throwable) {
+        spyInstance.atExceptionExit(clazz, methodInfo, target, args, throwable);
+    }
+
+    public static void atFrameworkEnter(String traceId, String spanId, String parentSpanId) {
+        spyInstance.atFrameworkEnter(traceId, spanId, parentSpanId);
+    }
+
     private static class DoNothingSpy implements SpySPI {
         @Override
         public void atEnter(Class<?> clazz, String methodInfo, Object target, Object[] args) {

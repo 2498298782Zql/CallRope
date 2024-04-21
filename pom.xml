@@ -13,6 +13,7 @@
         <module>CallRope-core</module>
         <module>CallRope-agent</module>
         <module>CallRope-example</module>
+        <module>CallRope-http-example</module>
     </modules>
 
     <properties>

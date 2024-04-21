@@ -1,6 +1,7 @@
-package zql.CallRope.core.adaptor;
+package zql.CallRope.core.adaptor.adaptorImpl;
 
 import javassist.*;
+import zql.CallRope.core.adaptor.ClassAdaptor;
 
 import static zql.CallRope.core.util.JavassistUtils.*;
 

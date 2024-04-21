@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="CallRope-agent" />
         <module name="CallRope-example" />
+        <module name="CallRope-http-example" />
         <module name="CallRope-spy" />
         <module name="CallRope-core" />
       </profile>

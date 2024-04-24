@@ -42,6 +42,7 @@ public class RopeAgent {
                 log.info("Spy jar file does not exist: " + CALLROPE_SPY_JAR);
                 return;
             }
+            // 使用自定义加载器加载 CALLROPE_CORE_JAR,防止污染线上的代码
             instrumentation.appendToBootstrapClassLoaderSearch(new JarFile(agentSpyFile));
             File agentCoreFile =new File(CALLROPE_CORE_JAR);
             if(!agentCoreFile.exists()){

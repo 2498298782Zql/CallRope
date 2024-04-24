@@ -1,6 +1,7 @@
 package zql.CallRope.core.instrumentation;
 
 import zql.CallRope.core.adaptor.ClassAdaptor;
+import zql.CallRope.core.adaptor.adaptorImpl.HttpMethodImplEnum;
 import zql.CallRope.core.aspect.SpyImpl;
 
 import java.lang.instrument.ClassFileTransformer;
@@ -21,15 +22,26 @@ public class CallRopeClassfileTransformer implements ClassFileTransformer {
     @Override
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
                             ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
-        System.out.println("transform supportBefore:" + className);
-        if(!supportClassMap.containsKey(className)){
+        if(!className.equals("org/springframework/boot/loader/LaunchedURLClassLoader")){
             return classfileBuffer;
         }
+        System.out.println("---------------------------------------------------------------------------------------");
         System.out.println("transform:" + className);
-        ClassAdaptor adaptor = supportClassMap.get(className);
-        if(adaptor != null){
-            return adaptor.modifyClass(className,classfileBuffer,SPY_JAR_PATH);
+        System.out.println("---------------------------------------------------------------------------------------");
+        if(className.equals("org/springframework/boot/loader/LaunchedURLClassLoader")){
+            System.out.println("////////////////////////////////////////////////");
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return HttpMethodImplEnum.SpringBootAdaptorImpl.modifyClass(className,classfileBuffer,SPY_JAR_PATH);
         }
+
+//        ClassAdaptor adaptor = supportClassMap.get(className);
+//        if(adaptor != null){
+//            return adaptor.modifyClass(className,classfileBuffer,SPY_JAR_PATH);
+//        }
         return classfileBuffer;
     }
 }

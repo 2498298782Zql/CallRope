@@ -1,20 +1,20 @@
 package zql.CallRope.core.adaptor;
 
-import zql.CallRope.core.adaptor.adaptorImpl.MethodAdaptorImpl;
-import zql.CallRope.core.adaptor.adaptorImpl.SpringBootAdaptorImpl;
+import zql.CallRope.core.adaptor.adaptorImpl.CommonMethodImplEnum;
+import zql.CallRope.core.adaptor.adaptorImpl.HttpMethodImplEnum;
+
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class ClassAdaptor {
-    public static Map<String,ClassAdaptor> supportClassMap;
+public interface ClassAdaptor {
+    Map<String,ClassAdaptor> supportClassMap = new HashMap<>(); // public static final
 
-    public static void init(){
-        supportClassMap = new HashMap<>();
+    static void init(){
         // TODO 阅读配置类
-        supportClassMap.put("zql/CallRope/demo/test01", new MethodAdaptorImpl());
-        supportClassMap.put("zql/CallRope/springBootDemo/testmain", new SpringBootAdaptorImpl());
+        supportClassMap.put("zql/CallRope/demo/test01", CommonMethodImplEnum.MethodAdaptorImpl);
+        supportClassMap.put("zql/CallRope/springBootDemo/handler/UserLoginInterceptor", HttpMethodImplEnum.SpringBootAdaptorImpl);
+        supportClassMap.put("org.springframework.web.bind.annotation.RestController",HttpMethodImplEnum.SpringBootAdaptorImpl);
     }
-
-    public abstract byte[] modifyClass(String className, byte[] classfileBuffer, String spyJarPath);
+    public byte[] modifyClass(String className, byte[] classfileBuffer, String spyJarPath);
 }

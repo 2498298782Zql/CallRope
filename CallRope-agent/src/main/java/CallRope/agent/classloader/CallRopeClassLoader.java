@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-
 @Slf4j
 public class CallRopeClassLoader extends URLClassLoader {
     public CallRopeClassLoader(URL[] urls) {
@@ -19,12 +18,10 @@ public class CallRopeClassLoader extends URLClassLoader {
             return loadedC;
         }
         // 优先从parent（SystemClassLoader）里加载系统类，避免抛出ClassNotFoundException
-        if (name != null && (name.startsWith("sun.") || name.startsWith("java."))) {
+        if (name != null && (name.startsWith("sun.") || name.startsWith("java.") || name.contains("zql.CallRope.point"))) {
             return super.loadClass(name, resolve);
         }
-        if (name != null && name.contains("zql.CallRope.point")) {
-            return super.loadClass(name, resolve);
-        }
+
         try {
             Class<?> loadedClass = findClass(name);
             if (loadedClass != null) {

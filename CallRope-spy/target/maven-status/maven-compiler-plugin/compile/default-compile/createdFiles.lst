@@ -1,4 +1,5 @@
 zql\CallRope\point\SpyAPI$1.class
 zql\CallRope\point\SpyAPI$DoNothingSpy.class
+zql\CallRope\point\SpyServiceManager.class
 zql\CallRope\point\SpyAPI.class
 zql\CallRope\point\SpySPI.class

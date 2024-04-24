@@ -1,8 +1,10 @@
 C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\aspect\SpyImpl.java
+C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\model\SpanBuilder.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\util\JavassistUtils.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\instrumentation\CallRopeClassfileTransformer.java
+C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\adaptor\adaptorImpl\HttpMethodImplEnum.java
+C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\adaptor\adaptorImpl\CommonMethodImplEnum.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\aspect\aspectImpl\MethodAspectImpl.java
-C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\adaptor\MethodAdaptorImpl.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\model\LogType.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\aspect\MethodAspect.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\adaptor\ClassAdaptor.java

@@ -12,17 +12,17 @@ public class MethodAspectImpl implements MethodAspect {
     private Map<String, Span> callRecordMap = new HashMap<>();
 
     @Override
-    public void before(Class<?> clazz, String methodName, String methodDesc, Object target, Object[] args) throws Throwable {
+    public void before(Class<?> clazz, String methodName, String methodDesc, Object target, Map<String,Object> infos) throws Throwable {
         System.out.println("before");
     }
 
     @Override
-    public void after(Class<?> clazz, String methodName, String methodDesc, Object target, Object[] args, Object returnObject) throws Throwable {
+    public void after(Class<?> clazz, String methodName, String methodDesc, Object target, Object returnObject, Map<String,Object> infos) throws Throwable {
         System.out.println("after");
     }
 
     @Override
-    public void error(Class<?> clazz, String methodName, String methodDesc, Object target, Object[] args, Throwable throwable) throws Throwable {
+    public void error(Class<?> clazz, String methodName, String methodDesc, Object target, Map<String,Object> infos, Throwable throwable) throws Throwable {
         System.out.println("error");
     }
 }

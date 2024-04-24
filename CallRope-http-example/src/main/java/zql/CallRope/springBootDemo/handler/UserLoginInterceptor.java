@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UserLoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        System.out.println(UserLoginInterceptor.class.getClassLoader().toString());
         System.out.println("开始处理");
         Thread.sleep(1000);
         return true;

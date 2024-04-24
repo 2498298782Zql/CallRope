@@ -29,19 +29,8 @@ public class CallRopeClassfileTransformer implements ClassFileTransformer {
         System.out.println("transform:" + className);
         System.out.println("---------------------------------------------------------------------------------------");
         if(className.equals("org/springframework/boot/loader/LaunchedURLClassLoader")){
-            System.out.println("////////////////////////////////////////////////");
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             return HttpMethodImplEnum.SpringBootAdaptorImpl.modifyClass(className,classfileBuffer,SPY_JAR_PATH);
         }
-
-//        ClassAdaptor adaptor = supportClassMap.get(className);
-//        if(adaptor != null){
-//            return adaptor.modifyClass(className,classfileBuffer,SPY_JAR_PATH);
-//        }
         return classfileBuffer;
     }
 }

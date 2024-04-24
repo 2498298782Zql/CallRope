@@ -4,29 +4,42 @@ package zql.CallRope.core.adaptor.adaptorImpl;
 import javassist.*;
 import zql.CallRope.core.adaptor.ClassAdaptor;
 
-public enum HttpMethodImplEnum implements ClassAdaptor{
-    SpringBootAdaptorImpl{ // 适配springboot
+import java.util.HashMap;
+import java.util.Map;
+
+public enum HttpMethodImplEnum implements ClassAdaptor {
+    SpringBootAdaptorImpl { // 适配springboot
+
         @Override
         public byte[] modifyClass(String className, byte[] classfileBuffer, String spyJarPath) {
             try {
+                String USER_HOME = System.getProperty("user.home");
                 ClassPool classPool = ClassPool.getDefault();
                 classPool.appendClassPath(spyJarPath);
                 CtClass ctClass = classPool.get("org.springframework.boot.loader.LaunchedURLClassLoader");
                 CtConstructor[] ctConstructors = ctClass.getDeclaredConstructors();
-                if(ctConstructors.length > 0){
+                if (ctConstructors.length > 0) {
                     System.out.println("ctConstructors大于0");
-                    Thread.sleep(3000);
                     System.out.println("睡觉结束 ：" + ctConstructors.length);
                 }
                 System.out.println("ctConstructors大于0睡觉结束 ：" + ctConstructors.length);
-                for(CtConstructor ctConstructor: ctConstructors){
+                System.out.println("1");
+                for (CtConstructor ctConstructor : ctConstructors) {
                     System.out.println("插入中1" + ctConstructor);
                     ctConstructor.insertAfter("System.out.println(\"borrow method called\");");
-                    Thread.sleep(10000);
                     System.out.println("插入中2" + ctConstructor);
                     ctConstructor.insertAfter("System.out.println(\"borrowLoader method called\");");
                     System.out.println("插入中3" + ctConstructor);
-                    ctConstructor.insertAfter("zql.CallRope.core.adaptor.adaptorImpl.HttpMethodImplEnum.testInsert(1)");
+                    ctConstructor.insertAfter("java.lang.String a = \"10\";");
+                    System.out.println("11");
+                    ctConstructor.insertAfter("String a2 = \"10\";");
+                    System.out.println("22");
+                    ctConstructor.insertAfter(
+                            "{java.util.Map/*<String, Object>*/ handlerMap = new java.util.HashMap/*<>*/();" +
+                                "handlerMap.put(\"loader\",this);" +
+                                String.format("zql.CallRope.point.SpyAPI.atFrameworkExit(\"%s\",\"%s\", \"%s\", %s);}", "111", "1", "123", "handlerMap")
+
+                    );
                     Thread.sleep(10000);
                 }
                 System.out.println("for结束");
@@ -47,25 +60,19 @@ public enum HttpMethodImplEnum implements ClassAdaptor{
 
         }
     };
-    public static void testInsert(int i){
-        System.out.println("测试添加" + i);
-    }
 
     public static void borrowLoader(ClassLoader loader) {
         try {
-            Thread.sleep(10000);
             System.out.println("borrowLoader");
             ClassPool classPool = ClassPool.getDefault();
             classPool.appendClassPath(new LoaderClassPath(loader));
             CtClass ctClass = classPool.getCtClass("org.springframework.web.servlet.HandlerInterceptor");
             System.out.println("HandlerInterceptor不为空");
-            Thread.sleep(5000);
             CtMethod ctMethod = ctClass.getDeclaredMethod("prehandle");
             ctMethod.insertAfter("System.out.println(\"我是handler\");");
             CtClass ctClass2 = classPool.getCtClass("zql.CallRope.springBootDemo.handler.UserLoginInterceptor");
             CtMethod ctMeThodImpl = ctClass.getDeclaredMethod("prehandle");
             System.out.println("UserLoginInterceptor不为空");
-            Thread.sleep(5000);
             ctMeThodImpl.insertAfter("System.out.println(\"我是handlerImpl\");");
             Class<?> clazz = ctClass.toClass(loader, ctClass.getClass().getProtectionDomain());
             Class<?> clazz2 = ctClass2.toClass(loader, ctClass.getClass().getProtectionDomain());
@@ -73,12 +80,10 @@ public enum HttpMethodImplEnum implements ClassAdaptor{
             e.printStackTrace();
         } catch (CannotCompileException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 
-    public static void borrow(ClassLoader loader){
+    public static void borrow(ClassLoader loader) {
         try {
             ClassPool classPool = ClassPool.getDefault();
             classPool.appendClassPath(new LoaderClassPath(loader));
@@ -90,6 +95,5 @@ public enum HttpMethodImplEnum implements ClassAdaptor{
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }

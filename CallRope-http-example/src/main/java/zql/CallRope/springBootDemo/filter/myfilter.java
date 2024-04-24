@@ -12,7 +12,6 @@ public class myfilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         System.out.println(myfilter.class.getClassLoader());
-        
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         String visitIp = req.getRemoteAddr();
         visitIp = "0:0:0:0:0:0:0:1".equals(visitIp) ? "127.0.0.1" : visitIp;

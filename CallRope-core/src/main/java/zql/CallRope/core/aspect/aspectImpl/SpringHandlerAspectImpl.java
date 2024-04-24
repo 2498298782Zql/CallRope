@@ -22,7 +22,7 @@ public class SpringHandlerAspectImpl implements FrameworkAspect {
             CtMethod ctMeThodImpl = ctClass.getDeclaredMethod("preHandle");
             System.out.println("UserLoginInterceptor不为空");
             ctMeThodImpl.insertAfter("System.out.println(\"我是handlerImpl\");");
-            Class<?> clazz2 = ctClass.toClass(loader, ctClass.getClass().getProtectionDomain());
+            ctClass.toClass(loader, ctClass.getClass().getProtectionDomain());
         } catch (NotFoundException e) {
             e.printStackTrace();
         } catch (CannotCompileException e) {

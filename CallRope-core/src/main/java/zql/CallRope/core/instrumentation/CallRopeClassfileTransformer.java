@@ -22,6 +22,10 @@ public class CallRopeClassfileTransformer implements ClassFileTransformer {
     @Override
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
                             ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
+        if(className.contains("zql/CallRope/springBootDemo/controller")){
+            System.out.println(loader);
+            System.out.println(className);
+        }
         if(!className.equals("org/springframework/boot/loader/LaunchedURLClassLoader")){
             return classfileBuffer;
         }
@@ -29,6 +33,7 @@ public class CallRopeClassfileTransformer implements ClassFileTransformer {
         System.out.println("transform:" + className);
         System.out.println("---------------------------------------------------------------------------------------");
         if(className.equals("org/springframework/boot/loader/LaunchedURLClassLoader")){
+            System.out.println(loader);
             return HttpMethodImplEnum.SpringBootAdaptorImpl.modifyClass(className,classfileBuffer,SPY_JAR_PATH);
         }
         return classfileBuffer;

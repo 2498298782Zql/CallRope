@@ -1,5 +1,5 @@
 zql\CallRope\springBootDemo\testmain.class
 zql\CallRope\springBootDemo\handler\UserLoginInterceptor.class
 zql\CallRope\springBootDemo\config\Myconfig.class
-zql\CallRope\springBootDemo\controller\loginContoller.class
 zql\CallRope\springBootDemo\filter\myfilter.class
+zql\CallRope\springBootDemo\controller\loginController.class

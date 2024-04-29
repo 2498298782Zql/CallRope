@@ -1,7 +1,7 @@
 package zql.CallRope.core.aspect.aspectImpl;
 
 import zql.CallRope.core.aspect.MethodAspect;
-import zql.CallRope.core.model.Span;
+import zql.CallRope.point.model.Span;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class MethodAspectImpl implements MethodAspect {
 
-    private Map<String, Span> callRecordMap = new HashMap<>();
 
     @Override
     public void before(Class<?> clazz, String methodName, String methodDesc, Object target, Map<String,Object> infos) throws Throwable {

@@ -41,25 +41,30 @@ public class SpyAPI {
         spyInstance.atExceptionExit(clazz, methodInfo, target, infos, throwable);
     }
 
-    public static void atFrameworkEnter(String traceId, String spanId, String parentSpanId, Map<String, Object> infos) {
-        spyInstance.atFrameworkEnter(traceId, spanId, parentSpanId, infos);
+    public static void atFrameworkEnter(String traceId, String spanId, String parentSpanId, String serviceName, String methodName, Map<String, Object> infos) {
+        spyInstance.atFrameworkEnter(traceId, spanId, parentSpanId, serviceName, methodName, infos);
     }
 
-    public static void atFrameworkExit(String traceId, String spanId, String parentSpanId,Map<String, Object> infos) {
-        spyInstance.atFrameworkExit(traceId, spanId, parentSpanId, infos);
+    public static void atFrameworkExit(String traceId, String spanId, String parentSpanId, String serviceName, String methodName, Map<String, Object> infos) {
+        spyInstance.atFrameworkExit(traceId, spanId, parentSpanId, serviceName, methodName, infos);
     }
-
 
 
     private static class DoNothingSpy implements SpySPI {
-        public void atEnter(Class<?> clazz, String methodInfo, Object target, Map<String,Object> infos){}
+        public void atEnter(Class<?> clazz, String methodInfo, Object target, Map<String, Object> infos) {
+        }
 
-        public void atExit(Class<?> clazz, String methodInfo, Object target, Object returnObject,Map<String,Object> infos) {}
+        public void atExit(Class<?> clazz, String methodInfo, Object target, Object returnObject, Map<String, Object> infos) {
+        }
 
-        public void atExceptionExit(Class<?> clazz, String methodInfo, Object target, Map<String,Object> infos, Throwable throwable){}
+        public void atExceptionExit(Class<?> clazz, String methodInfo, Object target, Map<String, Object> infos, Throwable throwable) {
+        }
 
-        public void atFrameworkEnter(String traceId, String spanId, String parentSpanId, Map<String,Object> infos){}
+        @Override
+        public void atFrameworkEnter(String traceId, String spanId, String parentSpanId, String serviceName, String methodName, Map<String, Object> infos) {
+        }
 
-        public void atFrameworkExit(String traceId, String spanId, String parentSpanId, Map<String,Object> infos){}
+        public void atFrameworkExit(String traceId, String spanId, String parentSpanId, String serviceName, String methodName, Map<String, Object> infos) {
+        }
     }
 }

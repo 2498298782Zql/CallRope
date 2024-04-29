@@ -7,12 +7,12 @@ import java.util.Map;
 
 public class SpringHandlerAspectImpl implements FrameworkAspect {
     @Override
-    public void entry(String traceId, String spanId, String parentSpanId, Map<String, Object> infos) {
-        // do nothing
+    public void entry(String traceId, String spanId, String parentSpanId, String serviceName, String methodName, Map<String, Object> infos) {
+
     }
 
     @Override
-    public void exit(String traceId, String spanId, String parentSpanId, Map<String, Object> infos) {
+    public void exit(String traceId, String spanId, String parentSpanId, String serviceName, String methodName, Map<String, Object> infos) {
         try {
             System.out.println("borrowLoader");
             ClassLoader loader = (ClassLoader) infos.get("loader");

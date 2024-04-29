@@ -25,7 +25,7 @@ public class SpyImpl implements SpySPI {
     }
 
     @Override
-    public void atEnter(Class<?> clazz, String methodInfo, Object target, Map<String,Object> infos){
+    public void atEnter(Class<?> clazz, String methodInfo, Object target, Map<String, Object> infos) {
         try {
             String[] methodInfos = splitMethodInfo(methodInfo);
             String methodName = methodInfos[0];
@@ -39,7 +39,7 @@ public class SpyImpl implements SpySPI {
     }
 
     @Override
-    public void atExit(Class<?> clazz, String methodInfo, Object target, Object returnObject,Map<String,Object> infos) {
+    public void atExit(Class<?> clazz, String methodInfo, Object target, Object returnObject, Map<String, Object> infos) {
         try {
             String[] methodInfos = splitMethodInfo(methodInfo);
             String methodName = methodInfos[0];
@@ -53,7 +53,7 @@ public class SpyImpl implements SpySPI {
     }
 
     @Override
-    public void atExceptionExit(Class<?> clazz, String methodInfo, Object target, Map<String,Object> infos, Throwable throwable){
+    public void atExceptionExit(Class<?> clazz, String methodInfo, Object target, Map<String, Object> infos, Throwable throwable) {
         try {
             String[] methodInfos = splitMethodInfo(methodInfo);
             String methodName = methodInfos[0];
@@ -67,10 +67,10 @@ public class SpyImpl implements SpySPI {
     }
 
     @Override
-    public void atFrameworkEnter(String traceId, String spanId, String parentSpanId, Map<String, Object> infos) {
+    public void atFrameworkEnter(String traceId, String spanId, String parentSpanId, String serviceName, String methodName, Map<String, Object> infos) {
         for (FrameworkAspect frameworkAspect : springFrameworkAspects) {
             try {
-                frameworkAspect.entry(traceId, spanId, parentSpanId, infos);
+                frameworkAspect.entry(traceId, spanId, parentSpanId, serviceName, methodName, infos);
             } catch (Throwable e) {
                 e.printStackTrace();
             }
@@ -78,10 +78,10 @@ public class SpyImpl implements SpySPI {
     }
 
     @Override
-    public void atFrameworkExit(String traceId, String spanId, String parentSpanId,Map<String, Object> infos) {
+    public void atFrameworkExit(String traceId, String spanId, String parentSpanId, String serviceName, String methodName, Map<String, Object> infos) {
         for (FrameworkAspect frameworkAspect : springFrameworkAspects) {
             try {
-                frameworkAspect.exit(traceId, spanId, parentSpanId,infos);
+                frameworkAspect.exit(traceId, spanId, parentSpanId, serviceName,methodName, infos);
             } catch (Throwable e) {
                 e.printStackTrace();
             }

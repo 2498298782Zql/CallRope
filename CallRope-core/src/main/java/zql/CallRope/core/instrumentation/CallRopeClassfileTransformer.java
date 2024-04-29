@@ -15,6 +15,8 @@ import static zql.CallRope.core.adaptor.ClassAdaptor.supportClassMap;
 public class CallRopeClassfileTransformer implements ClassFileTransformer {
 
     private final String SPY_JAR_PATH;
+    private static final byte[] NO_TRANSFORM = null;
+
 
     public CallRopeClassfileTransformer(String spyJarPath) {
         this.SPY_JAR_PATH = spyJarPath;
@@ -25,25 +27,10 @@ public class CallRopeClassfileTransformer implements ClassFileTransformer {
     @Override
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
                             ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
-        try{
-            if(className.contains("zql/CallRope/springBootDemo/controller")){
-                System.out.println(loader);
-                System.out.println(className);
-                ClassPool classPool = ClassPool.getDefault();
-                classPool.appendClassPath(new LoaderClassPath(loader));
-                CtClass ctClass = classPool.get("zql.CallRope.springBootDemo.controller.loginController");
-                CtMethod[] declaredMethods = ctClass.getDeclaredMethods();
-                for(CtMethod ctMethod : declaredMethods){
-                    ctMethod.insertAfter("System.out.println(\"12345\");");
-                }
-                ctClass.toClass(loader,ctClass.getClass().getProtectionDomain());
-                return null;
-            }
-        }catch (NotFoundException e) {
-            e.printStackTrace();
-        } catch (CannotCompileException e) {
-            e.printStackTrace();
-        }
-        return classfileBuffer;
+
+
+
+
+        return NO_TRANSFORM;
     }
 }

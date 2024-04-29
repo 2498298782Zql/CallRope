@@ -1,5 +1,16 @@
-zql\CallRope\point\SpyAPI$1.class
+zql\CallRope\point\TransmittableThreadLocal$Transmitter$Snapshot.class
+zql\CallRope\point\AutoWrap$AutoWarpDoNothing.class
+zql\CallRope\point\TtlEnhanced.class
+zql\CallRope\point\Wrap.class
+zql\CallRope\point\AutoWrap.class
 zql\CallRope\point\SpyAPI$DoNothingSpy.class
+zql\CallRope\point\TtlRunnable.class
 zql\CallRope\point\SpyServiceManager.class
+zql\CallRope\point\AutoWrap$1.class
+zql\CallRope\point\TransmittableThreadLocal.class
+zql\CallRope\point\TtlCallable.class
+zql\CallRope\point\SpyAPI$1.class
+zql\CallRope\point\TransmittableThreadLocal$1.class
+zql\CallRope\point\TransmittableThreadLocal$Transmitter.class
 zql\CallRope\point\SpyAPI.class
 zql\CallRope\point\SpySPI.class

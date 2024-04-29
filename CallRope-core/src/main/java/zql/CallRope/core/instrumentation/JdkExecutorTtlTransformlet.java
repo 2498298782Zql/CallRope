@@ -7,6 +7,7 @@ import java.lang.reflect.Modifier;
 import java.security.ProtectionDomain;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import static zql.CallRope.core.util.JavassistUtils.getCtClass;
 import static zql.CallRope.core.util.JavassistUtils.isClassAtPackageJavaUtil;
@@ -20,10 +21,9 @@ public class JdkExecutorTtlTransformlet implements TtlTransformlet{
 
     protected final boolean disableInheritableForThreadPool; // 是否需要基于线程池的跨线程传递
 
-    protected static final String THREAD_FACTORY_CLASS_NAME = "java.util.concurrent.ThreadFactory";
+    protected static final String THREAD_POOL_EXECUTOR_CLASS_NAME = "java.util.concurrent.ThreadPoolExecutor";
 
     private final Map<String, String> paramTypeNameToDecorateMethodClass = new HashMap<>();
-
     public JdkExecutorTtlTransformlet(boolean disableInheritableForThreadPool) {
         disableInheritableForThreadPool = false; // 后续再做
         this.disableInheritableForThreadPool = disableInheritableForThreadPool;
@@ -35,7 +35,7 @@ public class JdkExecutorTtlTransformlet implements TtlTransformlet{
     public void doTransform(ClassLoader loader, String className, Class<?> classBeingRedefined,
                             ProtectionDomain protectionDomain, byte[] classfileBuffer) throws CannotCompileException, NotFoundException, IOException {
         if (isClassAtPackageJavaUtil(className)) return;
-        if(className.equals(THREAD_FACTORY_CLASS_NAME)){
+        if(className.equals("java/util/concurrent/ThreadPoolExecutor")){
             CtClass ctClass = getCtClass(loader, className);
             if(ctClass == null){
                 return;
@@ -43,6 +43,7 @@ public class JdkExecutorTtlTransformlet implements TtlTransformlet{
             for(CtMethod ctMethod : ctClass.getDeclaredMethods()){
                 decorateMethodWithParameterHasRunnableOrCallable(ctMethod);
             }
+            ctClass.toClass(loader,protectionDomain);
         }
     }
 

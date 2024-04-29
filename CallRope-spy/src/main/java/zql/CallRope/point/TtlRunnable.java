@@ -1,5 +1,8 @@
 package zql.CallRope.point;
 
+import zql.CallRope.point.model.Span;
+import zql.CallRope.point.model.SpanBuilder;
+
 import java.util.concurrent.atomic.AtomicReference;
 
 import static zql.CallRope.point.TransmittableThreadLocal.Transmitter.*;
@@ -31,10 +34,10 @@ public class TtlRunnable implements Runnable, TtlEnhanced {
     }
 
     public static TtlRunnable get(Runnable runnable) {
-        return get(runnable, false);
+        return create(runnable, false);
     }
 
-    public static TtlRunnable get(Runnable runnable, boolean releaseTtlValueReferenceAfterRun) {
+    public static TtlRunnable create(Runnable runnable, boolean releaseTtlValueReferenceAfterRun) {
         if (null == runnable) return null;
         if (runnable instanceof TtlEnhanced) {
             throw new IllegalStateException("Already TtlRunnable!");

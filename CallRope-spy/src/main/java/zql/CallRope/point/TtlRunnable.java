@@ -1,17 +1,15 @@
 package zql.CallRope.point;
 
 import zql.CallRope.point.model.Span;
+import zql.CallRope.point.model.SpanBuilder;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.WeakHashMap;
+import java.sql.Statement;
 import java.util.concurrent.atomic.AtomicReference;
-
 import static zql.CallRope.point.TransmittableThreadLocal.Transmitter.*;
 
 public class TtlRunnable implements Runnable, TtlEnhanced {
     private final AtomicReference<Object> capturedRef;
-
+    private final Deliverthreadlocal deliverthreadlocal = new Deliverthreadlocal();
     public void setRunnable(Runnable runnable) {
         this.runnable = runnable;
     }
@@ -25,17 +23,33 @@ public class TtlRunnable implements Runnable, TtlEnhanced {
         this.releaseTtlValueReferenceAfterRun = releaseTtlValueReferenceAfterRun;
     }
 
+    private static String tomcatThreadNamePrefix = "http-nio";
 
     @Override
     public void run() {
+        if(Thread.currentThread().getName().contains(tomcatThreadNamePrefix)){
+            runnable.run();
+            return;
+        }
         Object captured = capturedRef.get();
         if (captured == null && releaseTtlValueReferenceAfterRun && !capturedRef.compareAndSet(captured, null)) {
             throw new IllegalStateException("TTL value reference is released after run!");
         }
-        Object backup = replay(captured);
+        Object backup = replay(captured, deliverthreadlocal);
         try {
+            Span oldSpan = null;
+            Span span = null;
             // 真正的Runnable调用
+            if (deliverthreadlocal.spanThreadLocal != null) {
+                System.out.println(Thread.currentThread().getName());
+                oldSpan = (Span) deliverthreadlocal.spanThreadLocal.get();
+                span = new SpanBuilder(oldSpan.traceId, oldSpan.spanId, oldSpan.pspanId, oldSpan.ServiceName, oldSpan.MethodName).withIsAsyncThread(true).build();
+                SpyAPI.atFrameworkEnter(span, null);
+            }
             runnable.run();
+            if(span != null) {
+                SpyAPI.atFrameworkExit(span, null);
+            }
         } finally {
             restore(backup);
         }
@@ -53,30 +67,4 @@ public class TtlRunnable implements Runnable, TtlEnhanced {
         return new TtlRunnable(runnable, releaseTtlValueReferenceAfterRun);
     }
 
-
-    /*TtlRunnable ttlRunnable = new TtlRunnable(runnable, releaseTtlValueReferenceAfterRun);
-    Snapshot snapshot = (Snapshot) ttlRunnable.capturedRef.get();
-    WeakHashMap<TransmittableThreadLocal<Object>, Object> ttl2Value = snapshot.ttl2Value;
-    Set<Map.Entry<TransmittableThreadLocal<Object>, Object>> entries = ttl2Value.entrySet();
-    TransmittableThreadLocal<Object> transmittableThreadLocal = null;
-        for (Map.Entry<TransmittableThreadLocal<Object>, Object> entry : entries) {
-        if (entry.getValue() instanceof Span) {
-            transmittableThreadLocal = entry.getKey();
-            System.out.println("hello");
-            break;
-        }
-    }
-    TransmittableThreadLocal<Object> threadLocal = transmittableThreadLocal;
-        ttlRunnable.capturedRef.set(capture());
-    final Runnable finalRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if(threadLocal == null){
-                System.out.println("real is null");
-            }
-            runnable.run();
-        }
-    };
-        ttlRunnable.setRunnable(finalRunnable);
-        return ttlRunnable;*/
 }

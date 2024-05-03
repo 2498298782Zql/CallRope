@@ -18,6 +18,12 @@ public class loginController {
                 System.out.println("我是异步任务！");
             }
         });
+        threadPoolExecutor.submit(() -> {
+            System.out.println(this.getClass().getClassLoader());
+            System.out.println(this.getClass());
+            System.out.println(this.getClass().toString());
+            System.out.println("我是lambda表达式");
+        });
         threadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {

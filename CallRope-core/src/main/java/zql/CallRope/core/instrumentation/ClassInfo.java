@@ -16,7 +16,7 @@ public class ClassInfo {
     private ProtectionDomain protectionDomain;
     private CtClass ctClass;
     private static final String USER_HOME = System.getProperty("user.home");
-    private static final String CALLROPE_SPY_JAR = USER_HOME + "/CallRope/callRope-spy.jar";
+    public static final String CALLROPE_SPY_JAR = USER_HOME + "/CallRope/callRope-spy.jar";
 
     public ClassInfo(String transformerClassFile, byte[] classFileBuffer, ClassLoader classLoader, ProtectionDomain protectionDomain) {
         this.transformerClassFile = transformerClassFile;
@@ -72,6 +72,7 @@ public class ClassInfo {
                 return null;
             }
         } catch (NotFoundException e) {
+            System.out.println(this.classLoader);
             e.printStackTrace();
         }
         return null;

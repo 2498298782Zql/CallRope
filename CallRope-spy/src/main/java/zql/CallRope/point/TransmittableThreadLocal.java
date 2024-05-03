@@ -1,5 +1,7 @@
 package zql.CallRope.point;
 
+import zql.CallRope.point.model.Span;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -99,12 +101,12 @@ public class TransmittableThreadLocal<T> extends InheritableThreadLocal<T> {
             return ttl2Value;
         }
 
-        public static Object replay(Object captured) {
+        public static Object replay(Object captured,Deliverthreadlocal deliverthreadlocal) {
             final Snapshot capturedSnapshot = (Snapshot) captured;
-            return new Snapshot(replayTtlValues(capturedSnapshot.ttl2Value));
+            return new Snapshot(replayTtlValues(capturedSnapshot.ttl2Value, deliverthreadlocal));
         }
 
-        private static WeakHashMap<TransmittableThreadLocal<Object>, Object> replayTtlValues(WeakHashMap<TransmittableThreadLocal<Object>, Object> captured) {
+        private static WeakHashMap<TransmittableThreadLocal<Object>, Object> replayTtlValues(WeakHashMap<TransmittableThreadLocal<Object>, Object> captured, Deliverthreadlocal deliverthreadlocal) {
             WeakHashMap<TransmittableThreadLocal<Object>, Object> backup = new WeakHashMap<TransmittableThreadLocal<Object>, Object>();
             for (final Iterator<TransmittableThreadLocal<Object>> iterator = holder.get().keySet().iterator(); iterator.hasNext(); ) {
                 TransmittableThreadLocal<Object> threadLocal = iterator.next();
@@ -115,11 +117,23 @@ public class TransmittableThreadLocal<T> extends InheritableThreadLocal<T> {
                     threadLocal.superRemove();
                 }
             }
-            setParentTtlValuesToKidTtl(captured);
+            setParentTtlValuesToKidTtl(captured, deliverthreadlocal);
             return backup;
         }
 
         // 刷新holder中子线程对应map的所有threadlocal值,并且跟新holder对应的weakhashMap
+        private static void setParentTtlValuesToKidTtl(WeakHashMap<TransmittableThreadLocal<Object>, Object> ttlValues, Deliverthreadlocal deliverthreadlocal) {
+            for (Map.Entry<TransmittableThreadLocal<Object>, Object> entry : ttlValues.entrySet()) {
+                TransmittableThreadLocal<Object> threadLocal = entry.getKey();
+                if(entry.getValue() instanceof Span){
+                    deliverthreadlocal.spanThreadLocal = threadLocal;
+                }
+                // 这一步真正将父线程的threadlocal的值刷新到子线程中
+                threadLocal.set(entry.getValue());
+            }
+        }
+
+        // 方法重载
         private static void setParentTtlValuesToKidTtl(WeakHashMap<TransmittableThreadLocal<Object>, Object> ttlValues) {
             for (Map.Entry<TransmittableThreadLocal<Object>, Object> entry : ttlValues.entrySet()) {
                 TransmittableThreadLocal<Object> threadLocal = entry.getKey();
@@ -127,6 +141,7 @@ public class TransmittableThreadLocal<T> extends InheritableThreadLocal<T> {
                 threadLocal.set(entry.getValue());
             }
         }
+
 
         public static void restore(Object backup) {
             final Snapshot backupSnapshot = (Snapshot) backup;

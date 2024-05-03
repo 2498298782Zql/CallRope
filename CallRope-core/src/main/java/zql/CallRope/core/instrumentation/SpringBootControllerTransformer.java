@@ -1,6 +1,8 @@
 package zql.CallRope.core.instrumentation;
 
 import javassist.*;
+import javassist.bytecode.SignatureAttribute;
+import zql.CallRope.core.util.JavassistUtils;
 
 import java.io.IOException;
 
@@ -15,6 +17,9 @@ public class SpringBootControllerTransformer implements transformer {
     public static final String POSTTMAPPING_ANNOTATION = "org.springframework.web.bind.annotation.PostMapping";
     public static final String DELETEMAPPING_ANNOTATION = "org.springframework.web.bind.annotation.DeleteMapping";
 
+
+//    "zql.CallRope.point.TransmittableThreadLocal<zql.CallRope.point.model.Span> threadlocalSpan = new zql.CallRope.point.TransmittableThreadLocal<zql.CallRope.point.model.Span>();\n"
+
     @Override
     public void doTransform(ClassInfo classInfo) {
         if (!classInfo.getClassName().startsWith(controller_package)) {
@@ -27,6 +32,12 @@ public class SpringBootControllerTransformer implements transformer {
             if (!ctClass.hasAnnotation(RESTCONTROLLER_ANNOTATION) && !ctClass.hasAnnotation(CONTROLLER_ANNOTATION)) {
                 return;
             }
+
+            CtClass ttlCLazz = JavassistUtils.getCtClass(null, "zql.CallRope.point.TransmittableThreadLocal");
+            CtField spanTtlField = CtField.make("zql.CallRope.point.TransmittableThreadLocal spanTtl = new zql.CallRope.point.TransmittableThreadLocal();", ctClass);
+            spanTtlField.setModifiers(Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL);
+            ctClass.addField(spanTtlField);
+
             CtMethod[] declaredMethods = ctClass.getDeclaredMethods();
             for (CtMethod ctMethod : declaredMethods) {
                 if (ctMethod.hasAnnotation(REQUESTMAPPING_ANNOTATION)
@@ -41,22 +52,18 @@ public class SpringBootControllerTransformer implements transformer {
                     StringBuilder codeBefore = new StringBuilder();
                     codeBefore.append("\n");
                     codeBefore.append("javax.servlet.http.HttpServletRequest requestDuplicate= $1;\n");
-                    codeBefore.append("String traceID = (String)requestDuplicate.getAttribute(\"CallRope-TraceId\");\n");
+                    codeBefore.append("String traceId = (String)requestDuplicate.getAttribute(\"CallRope-TraceId\");\n");
                     codeBefore.append("String pSpanId = (String)requestDuplicate.getAttribute(\"CallRope-pSpanId\");\n");
                     codeBefore.append("String spanId = (String)requestDuplicate.getAttribute(\"CallRope-spanId\");\n");
-                    codeBefore.append("zql.CallRope.point.model.Span span = zql.CallRope.point.SpyAPI.atFrameworkEnter(traceID,spanId,pSpanId,\"" + serviceName + "\",\"" + methodName + "\",null);");
-                    codeBefore.append("zql.CallRope.point.TransmittableThreadLocal<zql.CallRope.point.model.Span> threadlocalSpan = new zql.CallRope.point.TransmittableThreadLocal<zql.CallRope.point.model.Span>();\n");
-                    codeBefore.append("threadlocalSpan.set(span);\n");
+                    codeBefore.append(String.format("zql.CallRope.point.model.Span span = new zql.CallRope.point.model.SpanBuilder(traceId,spanId,pSpanId,\"%s\",\"%s\").build();\n", serviceName, methodName).toString());
+                    codeBefore.append("zql.CallRope.point.SpyAPI.atFrameworkEnter(span, null);\n");
+                    codeBefore.append("spanTtl.set(span);");
                     codeBefore.append("\n");
                     ctMethod.insertBefore(String.valueOf(codeBefore));
 
                     StringBuilder codeAfter = new StringBuilder();
                     codeAfter.append("\n");
-                    codeAfter.append("javax.servlet.http.HttpServletRequest requestDuplicate= $1;\n");
-                    codeAfter.append("String traceID = (String)requestDuplicate.getAttribute(\"CallRope-TraceId\");\n");
-                    codeAfter.append("String pSpanId = (String)requestDuplicate.getAttribute(\"CallRope-pSpanId\");\n");
-                    codeAfter.append("String spanId = (String)requestDuplicate.getAttribute(\"CallRope-spanId\");\n");
-                    codeAfter.append("zql.CallRope.point.model.Span spanDupilicate = (zql.CallRope.point.model.Span)threadlocalSpan.get();\n");
+                    codeAfter.append("zql.CallRope.point.model.Span spanDupilicate = (zql.CallRope.point.model.Span)spanTtl.get();\n");
                     codeAfter.append("zql.CallRope.point.SpyAPI.atFrameworkExit(spanDupilicate, null);");
                     codeAfter.append("\n");
                     ctMethod.insertAfter(String.valueOf(codeAfter));

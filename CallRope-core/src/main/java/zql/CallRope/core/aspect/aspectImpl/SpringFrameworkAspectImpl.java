@@ -13,14 +13,15 @@ public class SpringFrameworkAspectImpl implements FrameworkAspect {
     public final static TransmittableThreadLocal<Span> SPAN_INFO_THREAD_LOCAL = new TransmittableThreadLocal<>();
 
     @Override
-    public Span entry(Span span, Map<String, Object> infos) {
+    public Object entry(Span span, Map<String, Object> infos) {
+        span.start = System.currentTimeMillis();
         SPAN_INFO_THREAD_LOCAL.set(span);
         return span;
     }
 
 
     @Override
-    public Span exit(Span span, Map<String, Object> infos) {
+    public Object exit(Span span, Map<String, Object> infos) {
         span.end = System.currentTimeMillis();
         span.duration = span.end - span.start;
         System.out.println(span);

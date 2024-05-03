@@ -1,14 +1,12 @@
 package zql.CallRope.core.util;
 
 import javassist.*;
+import zql.CallRope.core.instrumentation.ClassInfo;
 
 import java.io.IOException;
 import java.security.ProtectionDomain;
 
 public class JavassistUtils {
-
-
-
 
     public static boolean isNative(CtBehavior method) {
         return Modifier.isNative(method.getModifiers());
@@ -44,6 +42,7 @@ public class JavassistUtils {
     public static CtClass getCtClass(ClassLoader loader, String className) throws IOException {
         try {
             ClassPool classPool = ClassPool.getDefault();
+            classPool.appendClassPath(ClassInfo.CALLROPE_SPY_JAR);
             if (loader == null) {
                 classPool.appendClassPath(new LoaderClassPath(ClassLoader.getSystemClassLoader()));
             } else {

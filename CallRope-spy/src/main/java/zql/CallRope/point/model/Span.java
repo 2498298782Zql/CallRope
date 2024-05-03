@@ -59,8 +59,7 @@ public class Span {
     @Override
     public String toString() {
         return "Span{" +
-                "nextId=" + nextId +
-                ", traceId='" + traceId + '\'' +
+                "traceId='" + traceId + '\'' +
                 ", spanId='" + spanId + '\'' +
                 ", pspanId='" + pspanId + '\'' +
                 ", ServiceName='" + ServiceName + '\'' +
@@ -70,6 +69,7 @@ public class Span {
                 ", end=" + end +
                 ", duration=" + duration +
                 ", logInfos=" + logInfos +
+                ", isAsyncThread=" + isAsyncThread +
                 '}';
     }
 }

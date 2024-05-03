@@ -38,6 +38,7 @@ public class JdkExecutorTtlTransformlet implements transformer {
                     return;
                 }
                 for (CtMethod ctMethod : ctClass.getDeclaredMethods()) {
+                    System.out.println(ctMethod.getName());
                     decorateMethodWithParameterHasRunnableOrCallable(ctMethod);
                 }
                 classInfo.setModified();

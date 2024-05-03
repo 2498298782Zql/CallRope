@@ -8,10 +8,10 @@ public interface FrameworkAspect {
     /**
      * 调用链路入口监听
      */
-    Span entry(Span span, Map<String, Object> infos);
+    Object entry(Span span, Map<String, Object> infos);
 
     /**
      * 调用链路出口监听
      */
-    Span exit(Span span, Map<String, Object> infos);
+    Object exit(Span span, Map<String, Object> infos);
 }

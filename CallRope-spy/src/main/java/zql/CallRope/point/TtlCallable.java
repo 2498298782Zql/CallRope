@@ -8,6 +8,7 @@ import static zql.CallRope.point.TransmittableThreadLocal.Transmitter.*;
 public class TtlCallable<V> implements TtlEnhanced, Callable<V> {
     private final AtomicReference<Object> capturedRef;
     private final Callable<V> callable;
+    private final Deliverthreadlocal deliverthreadlocal = new Deliverthreadlocal();
     private final boolean releaseTtlValueReferenceAfterCall;
 
     private TtlCallable(Callable<V> callable, boolean releaseTtlValueReferenceAfterCall) {
@@ -21,7 +22,7 @@ public class TtlCallable<V> implements TtlEnhanced, Callable<V> {
         if (captured == null || releaseTtlValueReferenceAfterCall && !capturedRef.compareAndSet(captured, null)) {
             throw new IllegalStateException("TTL value reference is released after call!");
         }
-        final Object backup = replay(captured);
+        final Object backup = replay(captured, deliverthreadlocal);
         try {
             return callable.call();
         } finally {

@@ -6,7 +6,7 @@ import com.alibaba.ttl.TtlRunnable;
 import java.util.concurrent.*;
 
 public class GlabalThreadPoolUtils {
-    static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, 1, 1l, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(3));
+    public static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 20, 1l, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(10));
     public static TransmittableThreadLocal<Integer> threadLocal = new TransmittableThreadLocal<>();
     public static ExecutorService executorService = Executors.newFixedThreadPool(1);
 

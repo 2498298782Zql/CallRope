@@ -10,7 +10,6 @@ public class AutoWrap {
     }
 
     private static class AutoWarpDoNothing implements Wrap {
-
         @Override
         public Runnable doAutoWrap(Runnable runnable) {
             if(runnable == null) return null;

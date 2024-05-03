@@ -29,10 +29,10 @@ public class TtlCallable<V> implements TtlEnhanced, Callable<V> {
         }
     }
     public static <V> TtlCallable get(Callable<V> callable) {
-        return get(callable, false);
+        return create(callable, false);
     }
 
-    public static <V> TtlCallable get(Callable<V> callable, boolean releaseTtlValueReferenceAfterRun) {
+    public static <V> TtlCallable create(Callable<V> callable, boolean releaseTtlValueReferenceAfterRun) {
         if (null == callable) return null;
         if (callable instanceof TtlEnhanced) {
             throw new IllegalStateException("Already TtlCallable!");

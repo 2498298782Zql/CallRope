@@ -15,10 +15,11 @@ public class Span {
     public long end;
     public long duration; // end - start
     public Map<String, Object> logInfos;
+    public Boolean isAsyncThread;
 
 
-    protected Span(String traceId, String spanId, String pspanId, String serviceName, String methodName, SpanEnvironment env,
-                   long start, long end, long duration, Map<String, Object> LogInfos) {
+    protected Span(String traceId, String spanId, String pspanId, String serviceName, String methodName,
+                   SpanEnvironment env, long start, long end, long duration, Map<String, Object> LogInfos) {
         this.traceId = traceId;
         this.spanId = spanId;
         this.pspanId = pspanId;
@@ -31,6 +32,21 @@ public class Span {
         this.logInfos = logInfos;
     }
 
+    public Span(String traceId, String spanId, String pspanId, String serviceName, String methodName,
+                SpanEnvironment env, long start, long end, long duration, Map<String, Object> logInfos, Boolean isAsyncThread) {
+        this.traceId = traceId;
+        this.spanId = spanId;
+        this.pspanId = pspanId;
+        ServiceName = serviceName;
+        MethodName = methodName;
+        this.env = env;
+        this.start = start;
+        this.end = end;
+        this.duration = duration;
+        this.logInfos = logInfos;
+        this.isAsyncThread = isAsyncThread;
+    }
+
     // 四个必要属性 + nextID;
     protected Span(String traceId, String spanId, String pspanId, String serviceName, String methodName) {
         this.traceId = traceId;
@@ -38,6 +54,23 @@ public class Span {
         this.pspanId = pspanId;
         ServiceName = serviceName;
         MethodName = methodName;
+    }
+
+    @Override
+    public String toString() {
+        return "Span{" +
+                "nextId=" + nextId +
+                ", traceId='" + traceId + '\'' +
+                ", spanId='" + spanId + '\'' +
+                ", pspanId='" + pspanId + '\'' +
+                ", ServiceName='" + ServiceName + '\'' +
+                ", MethodName='" + MethodName + '\'' +
+                ", env=" + env +
+                ", start=" + start +
+                ", end=" + end +
+                ", duration=" + duration +
+                ", logInfos=" + logInfos +
+                '}';
     }
 }
 

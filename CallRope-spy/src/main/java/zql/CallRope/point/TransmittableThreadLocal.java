@@ -79,7 +79,7 @@ public class TransmittableThreadLocal<T> extends InheritableThreadLocal<T> {
     }
 
     public static class Transmitter {
-        private static class Snapshot {
+        public static class Snapshot {
             final WeakHashMap<TransmittableThreadLocal<Object>, Object> ttl2Value;
 
             private Snapshot(WeakHashMap<TransmittableThreadLocal<Object>, Object> ttl2Value) {
@@ -145,5 +145,6 @@ public class TransmittableThreadLocal<T> extends InheritableThreadLocal<T> {
             }
             setParentTtlValuesToKidTtl(backup);
         }
+
     }
 }

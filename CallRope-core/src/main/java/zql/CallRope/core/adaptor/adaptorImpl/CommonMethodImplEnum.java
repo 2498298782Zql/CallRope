@@ -2,17 +2,18 @@ package zql.CallRope.core.adaptor.adaptorImpl;
 
 import javassist.*;
 import zql.CallRope.core.adaptor.ClassAdaptor;
+import zql.CallRope.core.instrumentation.ClassInfo;
 
 import static zql.CallRope.core.util.JavassistUtils.*;
 
 public enum CommonMethodImplEnum implements ClassAdaptor {
     MethodAdaptorImpl{
         @Override
-        public byte[] modifyClass(String className, byte[] classfileBuffer, String spyJarPath){
+        public byte[] modifyClass(ClassInfo classInfo, String spyJarPath){
             try {
                 ClassPool classPool = ClassPool.getDefault();
                 classPool.appendClassPath(spyJarPath);
-                String clazzName = className.replace("/", ".");
+                String clazzName = classInfo.getClassName();
                 CtClass ctClass = classPool.get(clazzName);
                 for (CtBehavior ctBehavior : ctClass.getDeclaredMethods()) {
                     addMethodAspect(clazzName, ctBehavior, false);
@@ -22,7 +23,7 @@ public enum CommonMethodImplEnum implements ClassAdaptor {
                 return ctClass.toBytecode();
             } catch (Exception e) {
                 e.printStackTrace();
-                return classfileBuffer;
+                return classInfo.getClassFileBuffer();
             }
         }
         private void addMethodAspect(String clazzName, CtBehavior ctBehavior,

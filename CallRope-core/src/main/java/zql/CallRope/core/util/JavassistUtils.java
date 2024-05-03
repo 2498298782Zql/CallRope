@@ -6,19 +6,27 @@ import java.io.IOException;
 import java.security.ProtectionDomain;
 
 public class JavassistUtils {
+
+
+
+
     public static boolean isNative(CtBehavior method) {
         return Modifier.isNative(method.getModifiers());
     }
+
     public static boolean isAbstract(CtBehavior method) {
         return Modifier.isAbstract(method.getModifiers());
     }
+
     public static boolean isStatic(CtBehavior method) {
         return Modifier.isStatic(method.getModifiers());
     }
+
     public static boolean isClassAtPackageJavaUtil(String className) {
         return isClassAtPackage(className, "java.util");
     }
-    public static boolean isClassAtPackage(String className,String packageName) {
+
+    public static boolean isClassAtPackage(String className, String packageName) {
         return packageName.equals(getPackageName(className));
     }
 
@@ -28,6 +36,10 @@ public class JavassistUtils {
         return className.substring(0, idx);
     }
 
+    public static boolean isClassUnderPackage(String className, String packageName) {
+        String packageOfClass = getPackageName(className);
+        return packageOfClass.equals(packageName) || packageOfClass.startsWith(packageName + ".");
+    }
 
     public static CtClass getCtClass(ClassLoader loader, String className) throws IOException {
         try {
@@ -38,9 +50,9 @@ public class JavassistUtils {
                 classPool.appendClassPath(new LoaderClassPath(loader));
             }
             CtClass ctClass = classPool.get(className);
-            if(ctClass != null){
+            if (ctClass != null) {
                 return ctClass;
-            }else {
+            } else {
                 return null;
             }
         } catch (NotFoundException e) {

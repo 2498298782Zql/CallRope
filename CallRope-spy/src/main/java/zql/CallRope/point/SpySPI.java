@@ -1,5 +1,7 @@
 package zql.CallRope.point;
 
+import zql.CallRope.point.model.Span;
+
 import java.util.Map;
 
 public interface SpySPI {
@@ -9,7 +11,11 @@ public interface SpySPI {
 
     public void atExceptionExit(Class<?> clazz, String methodInfo, Object target, Map<String, Object> infos, Throwable throwable);
 
-    public void atFrameworkEnter(String traceId, String spanId, String parentSpanId, String serviceName, String methodName, Map<String, Object> infos);
+    public void atFrameworkEnter(Span span, Map<String, Object> infos);
 
-    public void atFrameworkExit(String traceId, String spanId, String parentSpanId, String serviceName, String methodName, Map<String, Object> infos);
+    public void atFrameworkExit(Span span, Map<String, Object> infos);
+
+    public void atFrameThreadPoolEnter(Span span);
+
+    public void atFrameThreadPoolExit(Span span);
 }

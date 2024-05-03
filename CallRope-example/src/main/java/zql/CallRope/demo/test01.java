@@ -32,6 +32,6 @@ public class test01 {
             public void run() {
                 System.out.println("子业务代码" + transmittableThreadLocal.get());
             }
-        },"123","1"));
+        }));
     }
 }

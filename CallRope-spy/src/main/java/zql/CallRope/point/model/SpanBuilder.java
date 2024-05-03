@@ -15,6 +15,11 @@ public class SpanBuilder {
         span = new Span(traceId, spanId, pspanId, serviceName, methodName, env, start, end, duration, logInfos);
     }
 
+    public SpanBuilder(String traceId, String spanId, String pspanId, String serviceName, String methodName, SpanEnvironment env,
+                       long start, long end, long duration, Map<String, Object> logInfos, boolean isAsyncThread){
+        span = new Span(traceId, spanId, pspanId, serviceName, methodName, env, start, end, duration, logInfos, isAsyncThread);
+    }
+
     // 可选属性
     public SpanBuilder withPspanId(String pspanId) {
         span.pspanId = pspanId;
@@ -44,6 +49,11 @@ public class SpanBuilder {
 
     public SpanBuilder withDuration(long duration) {
         span.duration = duration;
+        return this;
+    }
+
+    public SpanBuilder withIsAsyncThread(boolean isAsyncThread){
+        span.isAsyncThread = isAsyncThread;
         return this;
     }
 

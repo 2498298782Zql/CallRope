@@ -2,6 +2,7 @@ package zql.CallRope.core.aspect.aspectImpl;
 
 import zql.CallRope.core.aspect.FrameworkAspect;
 import zql.CallRope.point.IDutils.TraceIdGenerator;
+import zql.CallRope.point.TransmittableThreadLocal;
 import zql.CallRope.point.model.Span;
 import zql.CallRope.point.model.SpanBuilder;
 import zql.CallRope.point.model.SpanEnvironment;
@@ -9,30 +10,21 @@ import zql.CallRope.point.model.SpanEnvironment;
 import java.util.Map;
 
 public class SpringFrameworkAspectImpl implements FrameworkAspect {
-    public final static ThreadLocal<Span> SPAN_INFO_THREAD_LOCAL = new ThreadLocal<>();
+    public final static TransmittableThreadLocal<Span> SPAN_INFO_THREAD_LOCAL = new TransmittableThreadLocal<>();
 
     @Override
-    public void entry(String traceId, String spanId, String parentSpanId, String serviceName, String methodName, Map<String, Object> infos) {
-        if (traceId == null || traceId.trim().length() == 0) {
-            traceId = TraceIdGenerator.generateTraceId();
-        }
-        if (spanId == null || spanId.trim().length() == 0) {
-            spanId = "0";
-        }
-        if (parentSpanId == null || parentSpanId.trim().length() == 0) {
-            parentSpanId = "-1";
-        }
-        Span span = new SpanBuilder(traceId, spanId, parentSpanId, serviceName, methodName).withMapLogInfos(infos)
-                .withEnv(SpanEnvironment.PRODUCTION_ENVIRONMENT).withStart(System.currentTimeMillis()).build();
+    public Span entry(Span span, Map<String, Object> infos) {
         SPAN_INFO_THREAD_LOCAL.set(span);
+        return span;
     }
+
 
     @Override
-    public void exit(String traceId, String spanId, String parentSpanId, String serviceName, String methodName, Map<String, Object> infos) {
-        Span span = SPAN_INFO_THREAD_LOCAL.get();
+    public Span exit(Span span, Map<String, Object> infos) {
         span.end = System.currentTimeMillis();
-        span.duration = span.start - span.end;
+        span.duration = span.end - span.start;
         System.out.println(span);
+        SPAN_INFO_THREAD_LOCAL.remove();
+        return span;
     }
-
 }

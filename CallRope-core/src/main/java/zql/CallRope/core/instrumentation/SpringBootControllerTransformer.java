@@ -53,7 +53,6 @@ public class SpringBootControllerTransformer implements transformer {
                     codeBefore.append("String spanId = (String)requestDuplicate.getAttribute(\"CallRope-spanId\");\n");
                     codeBefore.append(String.format("zql.CallRope.point.model.Span span = new zql.CallRope.point.model.SpanBuilder(traceId,spanId,pSpanId,\"%s\",\"%s\").build();\n", serviceName, methodName).toString());
                     codeBefore.append("zql.CallRope.point.SpyAPI.atFrameworkEnter(span, null);\n");
-                    codeBefore.append("System.out.println(span);\n");
                     codeBefore.append("zql.CallRope.point.Trace.spanTtl.set(span);");
                     codeBefore.append("\n");
                     ctMethod.insertBefore(String.valueOf(codeBefore));

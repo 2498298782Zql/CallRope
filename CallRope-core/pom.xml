@@ -23,9 +23,9 @@
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>zql.CallRope</groupId>
-            <artifactId>CallRope-http-example</artifactId>
-            <version>1.0</version>
+            <groupId>com.lmax</groupId>
+            <artifactId>disruptor</artifactId>
+            <version>3.3.6</version>
         </dependency>
     </dependencies>
 

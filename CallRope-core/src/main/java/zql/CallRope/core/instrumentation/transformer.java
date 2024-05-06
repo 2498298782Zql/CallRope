@@ -7,5 +7,5 @@ import java.io.IOException;
 import java.security.ProtectionDomain;
 
 public interface transformer {
-    void doTransform(ClassInfo classInfo);
+    void doTransform(ClassInfo classInfo) throws IOException, NotFoundException, ClassNotFoundException, CannotCompileException;
 }

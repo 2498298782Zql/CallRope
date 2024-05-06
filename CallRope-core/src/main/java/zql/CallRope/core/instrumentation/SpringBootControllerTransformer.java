@@ -18,7 +18,6 @@ public class SpringBootControllerTransformer implements transformer {
     public static final String DELETEMAPPING_ANNOTATION = "org.springframework.web.bind.annotation.DeleteMapping";
 
 
-//    "zql.CallRope.point.TransmittableThreadLocal<zql.CallRope.point.model.Span> threadlocalSpan = new zql.CallRope.point.TransmittableThreadLocal<zql.CallRope.point.model.Span>();\n"
 
     @Override
     public void doTransform(ClassInfo classInfo) {
@@ -26,20 +25,17 @@ public class SpringBootControllerTransformer implements transformer {
             return;
         }
         try {
-
+            System.out.println("-----------------------------------------------");
+            System.out.println(classInfo.getClassName());
             CtClass ctClass = classInfo.getCtClass();
             String serviceName = ctClass.getName();
             if (!ctClass.hasAnnotation(RESTCONTROLLER_ANNOTATION) && !ctClass.hasAnnotation(CONTROLLER_ANNOTATION)) {
                 return;
             }
-
-            CtClass ttlCLazz = JavassistUtils.getCtClass(null, "zql.CallRope.point.TransmittableThreadLocal");
-            CtField spanTtlField = CtField.make("zql.CallRope.point.TransmittableThreadLocal spanTtl = new zql.CallRope.point.TransmittableThreadLocal();", ctClass);
-            spanTtlField.setModifiers(Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL);
-            ctClass.addField(spanTtlField);
-
+            System.out.println("2 : " + classInfo.getClassName());
             CtMethod[] declaredMethods = ctClass.getDeclaredMethods();
             for (CtMethod ctMethod : declaredMethods) {
+                System.out.println(ctMethod + "==================");
                 if (ctMethod.hasAnnotation(REQUESTMAPPING_ANNOTATION)
                         || ctMethod.hasAnnotation(GETMAPPING_ANNOTATION)
                         || ctMethod.hasAnnotation(POSTTMAPPING_ANNOTATION)
@@ -48,7 +44,7 @@ public class SpringBootControllerTransformer implements transformer {
                     CtClass request = classPool.get("javax.servlet.http.HttpServletRequest");
                     ctMethod.insertParameter(request);
                     String methodName = ctMethod.getName();
-
+                    System.out.println("111111111 : " + classInfo.getClassName());
                     StringBuilder codeBefore = new StringBuilder();
                     codeBefore.append("\n");
                     codeBefore.append("javax.servlet.http.HttpServletRequest requestDuplicate= $1;\n");
@@ -57,20 +53,19 @@ public class SpringBootControllerTransformer implements transformer {
                     codeBefore.append("String spanId = (String)requestDuplicate.getAttribute(\"CallRope-spanId\");\n");
                     codeBefore.append(String.format("zql.CallRope.point.model.Span span = new zql.CallRope.point.model.SpanBuilder(traceId,spanId,pSpanId,\"%s\",\"%s\").build();\n", serviceName, methodName).toString());
                     codeBefore.append("zql.CallRope.point.SpyAPI.atFrameworkEnter(span, null);\n");
-                    codeBefore.append("spanTtl.set(span);");
+                    codeBefore.append("System.out.println(span);\n");
+                    codeBefore.append("zql.CallRope.point.Trace.spanTtl.set(span);");
                     codeBefore.append("\n");
                     ctMethod.insertBefore(String.valueOf(codeBefore));
 
                     StringBuilder codeAfter = new StringBuilder();
                     codeAfter.append("\n");
-                    codeAfter.append("zql.CallRope.point.model.Span spanDupilicate = (zql.CallRope.point.model.Span)spanTtl.get();\n");
+                    codeAfter.append("zql.CallRope.point.model.Span spanDupilicate = (zql.CallRope.point.model.Span)zql.CallRope.point.Trace.spanTtl.get();\n");
                     codeAfter.append("zql.CallRope.point.SpyAPI.atFrameworkExit(spanDupilicate, null);");
                     codeAfter.append("\n");
                     ctMethod.insertAfter(String.valueOf(codeAfter));
-
-                    ctClass.toClass(classInfo.getClassLoader(), classInfo.getProtectionDomain());
+                    classInfo.flag = true;
                     classInfo.setModified();
-                    return;
                 }
             }
         } catch (NotFoundException e) {

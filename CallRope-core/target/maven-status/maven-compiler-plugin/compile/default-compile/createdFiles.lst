@@ -1,10 +1,12 @@
 zql\CallRope\core\instrumentation\SpringBootControllerTransformer.class
+zql\CallRope\core\instrumentation\dubbo\DubboProducerFilterTransformer.class
 zql\CallRope\core\instrumentation\JdkExecutorTtlTransformlet.class
 zql\CallRope\core\adaptor\adaptorImpl\CommonMethodImplEnum$1.class
 zql\CallRope\core\adaptor\adaptorImpl\HttpMethodImplEnum.class
 zql\CallRope\core\adaptor\adaptorImpl\CommonMethodImplEnum.class
 zql\CallRope\core\instrumentation\CallRopeClassfileTransformer.class
 zql\CallRope\core\aspect\AsyncThreadAspect.class
+zql\CallRope\core\instrumentation\dubbo\DubboConsumerFilterTransformer.class
 zql\CallRope\core\aspect\SpyImpl.class
 zql\CallRope\core\util\ClassFilterChain.class
 zql\CallRope\core\aspect\aspectImpl\SpringFrameworkAspectImpl.class

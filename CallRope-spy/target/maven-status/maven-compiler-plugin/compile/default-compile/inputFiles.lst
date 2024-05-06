@@ -1,7 +1,6 @@
 C:\Users\24982\Desktop\mit\CallRope\CallRope-spy\src\main\java\zql\CallRope\point\TtlEnhanced.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-spy\src\main\java\zql\CallRope\point\TtlRunnable.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-spy\src\main\java\zql\CallRope\point\Wrap.java
-C:\Users\24982\Desktop\mit\CallRope\CallRope-spy\src\main\java\zql\CallRope\point\Deliverthreadlocal.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-spy\src\main\java\zql\CallRope\point\AutoWrap.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-spy\src\main\java\zql\CallRope\point\SpyAPI.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-spy\src\main\java\zql\CallRope\point\model\Span.java
@@ -10,6 +9,7 @@ C:\Users\24982\Desktop\mit\CallRope\CallRope-spy\src\main\java\zql\CallRope\poin
 C:\Users\24982\Desktop\mit\CallRope\CallRope-spy\src\main\java\zql\CallRope\point\TransmittableThreadLocal.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-spy\src\main\java\zql\CallRope\point\model\SpanBuilder.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-spy\src\main\java\zql\CallRope\point\SpyServiceManager.java
+C:\Users\24982\Desktop\mit\CallRope\CallRope-spy\src\main\java\zql\CallRope\point\Trace.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-spy\src\main\java\zql\CallRope\point\model\LogInfo.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-spy\src\main\java\zql\CallRope\point\model\LogType.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-spy\src\main\java\zql\CallRope\point\SpySPI.java

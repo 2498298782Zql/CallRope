@@ -3,13 +3,13 @@ package zql.CallRope.point;
 import zql.CallRope.point.model.Span;
 import zql.CallRope.point.model.SpanBuilder;
 
-import java.sql.Statement;
 import java.util.concurrent.atomic.AtomicReference;
+
+import static zql.CallRope.point.Trace.isThreadNameWithPrefix;
 import static zql.CallRope.point.TransmittableThreadLocal.Transmitter.*;
 
 public class TtlRunnable implements Runnable, TtlEnhanced {
     private final AtomicReference<Object> capturedRef;
-    private final Deliverthreadlocal deliverthreadlocal = new Deliverthreadlocal();
     public void setRunnable(Runnable runnable) {
         this.runnable = runnable;
     }
@@ -23,11 +23,11 @@ public class TtlRunnable implements Runnable, TtlEnhanced {
         this.releaseTtlValueReferenceAfterRun = releaseTtlValueReferenceAfterRun;
     }
 
-    private static String tomcatThreadNamePrefix = "http-nio";
+
 
     @Override
     public void run() {
-        if(Thread.currentThread().getName().contains(tomcatThreadNamePrefix)){
+        if (isThreadNameWithPrefix()) {
             runnable.run();
             return;
         }
@@ -35,20 +35,19 @@ public class TtlRunnable implements Runnable, TtlEnhanced {
         if (captured == null && releaseTtlValueReferenceAfterRun && !capturedRef.compareAndSet(captured, null)) {
             throw new IllegalStateException("TTL value reference is released after run!");
         }
-        Object backup = replay(captured, deliverthreadlocal);
+        Object backup = replay(captured);
         try {
-            Span oldSpan = null;
-            Span span = null;
+            Span oldSpan = (Span) Trace.spanTtl.get();
             // 真正的Runnable调用
-            if (deliverthreadlocal.spanThreadLocal != null) {
-                System.out.println(Thread.currentThread().getName());
-                oldSpan = (Span) deliverthreadlocal.spanThreadLocal.get();
-                span = new SpanBuilder(oldSpan.traceId, oldSpan.spanId, oldSpan.pspanId, oldSpan.ServiceName, oldSpan.MethodName).withIsAsyncThread(true).build();
+            if (oldSpan != null) {
+                Span span = new SpanBuilder(oldSpan.traceId, oldSpan.spanId, oldSpan.pspanId, oldSpan.ServiceName, oldSpan.MethodName).withIsAsyncThread(true).build();
+                Trace.spanTtl.set(span);
                 SpyAPI.atFrameworkEnter(span, null);
             }
             runnable.run();
-            if(span != null) {
-                SpyAPI.atFrameworkExit(span, null);
+            oldSpan = Trace.spanTtl.get();
+            if ( oldSpan != null) {
+                SpyAPI.atFrameworkExit(oldSpan, null);
             }
         } finally {
             restore(backup);

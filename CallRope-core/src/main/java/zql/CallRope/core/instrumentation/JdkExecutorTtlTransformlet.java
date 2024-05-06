@@ -33,12 +33,12 @@ public class JdkExecutorTtlTransformlet implements transformer {
             String className = classInfo.getClassName();
             if (isClassAtPackageJavaUtil(className)) return;
             if (className.equals(THREAD_POOL_EXECUTOR_CLASS_NAME)) {
+                System.out.println("1 : " + className);
                 CtClass ctClass = classInfo.getCtClass();
                 if (ctClass == null) {
                     return;
                 }
                 for (CtMethod ctMethod : ctClass.getDeclaredMethods()) {
-                    System.out.println(ctMethod.getName());
                     decorateMethodWithParameterHasRunnableOrCallable(ctMethod);
                 }
                 classInfo.setModified();

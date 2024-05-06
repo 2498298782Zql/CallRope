@@ -8,11 +8,20 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="CallRope-agent" />
-        <module name="CallRope-example" />
         <module name="CallRope-http-example" />
         <module name="CallRope-spy" />
         <module name="CallRope-core" />
+        <module name="CallRope-dubbo-facafe-api-example" />
+        <module name="CallRope-example" />
+        <module name="CallRope-dubbo-producer-example" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="CallRope-dubbo-consumer-example" target="8" />
+      <module name="CallRope-dubbo-example" target="8" />
+      <module name="consumer-example" target="8" />
+      <module name="example-dubbo" target="8" />
+      <module name="producer-example" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

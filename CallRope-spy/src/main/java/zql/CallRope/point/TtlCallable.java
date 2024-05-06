@@ -1,5 +1,8 @@
 package zql.CallRope.point;
 
+import zql.CallRope.point.model.Span;
+import zql.CallRope.point.model.SpanBuilder;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -8,7 +11,6 @@ import static zql.CallRope.point.TransmittableThreadLocal.Transmitter.*;
 public class TtlCallable<V> implements TtlEnhanced, Callable<V> {
     private final AtomicReference<Object> capturedRef;
     private final Callable<V> callable;
-    private final Deliverthreadlocal deliverthreadlocal = new Deliverthreadlocal();
     private final boolean releaseTtlValueReferenceAfterCall;
 
     private TtlCallable(Callable<V> callable, boolean releaseTtlValueReferenceAfterCall) {
@@ -22,9 +24,20 @@ public class TtlCallable<V> implements TtlEnhanced, Callable<V> {
         if (captured == null || releaseTtlValueReferenceAfterCall && !capturedRef.compareAndSet(captured, null)) {
             throw new IllegalStateException("TTL value reference is released after call!");
         }
-        final Object backup = replay(captured, deliverthreadlocal);
+        final Object backup = replay(captured);
         try {
-            return callable.call();
+            Span oldSpan = (Span) Trace.spanTtl.get();
+            if (oldSpan != null) {
+                Span span = new SpanBuilder(oldSpan.traceId, oldSpan.spanId, oldSpan.pspanId, oldSpan.ServiceName, oldSpan.MethodName).withIsAsyncThread(true).build();
+                Trace.spanTtl.set(span);
+                SpyAPI.atFrameworkEnter(span, null);
+            }
+            V result = callable.call();
+            oldSpan = Trace.spanTtl.get();
+            if ( oldSpan != null) {
+                SpyAPI.atFrameworkExit(oldSpan, null);
+            }
+            return result;
         } finally {
             restore(backup);
         }

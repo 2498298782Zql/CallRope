@@ -11,12 +11,16 @@ public class SpringRunTransformer implements transformer {
             return;
         }
         try {
+            System.out.println("4 : " + classInfo.getClassName());
             CtClass ctClass = classInfo.getCtClass();
             CtClass[] declaredClasses = ctClass.getDeclaredClasses();
             ClassPool classPool2 = ClassPool.getDefault();
             if (ctClass.subtypeOf(classPool2.get("java.lang.Runnable"))) {
                 CtMethod run = ctClass.getDeclaredMethod("run");
                 run.insertBefore("System.out.println(threadlocalSpan.get());");
+            }
+            if(classInfo.getClassLoader() != null){
+                ctClass.toClass(classInfo.getClassLoader(), classInfo.getProtectionDomain());
             }
             classInfo.setModified();
         } catch (IOException e) {

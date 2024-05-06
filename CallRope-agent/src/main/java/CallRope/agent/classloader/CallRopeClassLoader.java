@@ -1,11 +1,9 @@
 package CallRope.agent.classloader;
 
-import lombok.extern.slf4j.Slf4j;
 
 import java.net.URL;
 import java.net.URLClassLoader;
 
-@Slf4j
 public class CallRopeClassLoader extends URLClassLoader {
     public CallRopeClassLoader(URL[] urls) {
         super(urls,getSystemClassLoader().getParent());
@@ -31,7 +29,6 @@ public class CallRopeClassLoader extends URLClassLoader {
                 return loadedClass;
             }
         } catch (ClassNotFoundException ignored) {
-            log.info("CallRopeClassLoader:ClassNotFoundException in CallRopeClassLoader");
             ignored.printStackTrace();
         }
         return super.loadClass(name, resolve);

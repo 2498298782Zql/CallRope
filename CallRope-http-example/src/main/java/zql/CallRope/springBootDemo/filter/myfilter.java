@@ -17,6 +17,5 @@ public class myfilter implements Filter {
         visitIp = "0:0:0:0:0:0:0:1".equals(visitIp) ? "127.0.0.1" : visitIp;
         System.out.println("访问 IP = " + visitIp);
         filterChain.doFilter(req, servletResponse);
-        new Thread();
     }
 }

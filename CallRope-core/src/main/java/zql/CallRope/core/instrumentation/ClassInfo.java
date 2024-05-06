@@ -18,6 +18,8 @@ public class ClassInfo {
     private static final String USER_HOME = System.getProperty("user.home");
     public static final String CALLROPE_SPY_JAR = USER_HOME + "/CallRope/callRope-spy.jar";
 
+    public boolean flag = false;
+
     public ClassInfo(String transformerClassFile, byte[] classFileBuffer, ClassLoader classLoader, ProtectionDomain protectionDomain) {
         this.transformerClassFile = transformerClassFile;
         this.className = toClassName(transformerClassFile);

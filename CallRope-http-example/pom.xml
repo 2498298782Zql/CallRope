@@ -32,8 +32,26 @@
 
     <dependencies>
         <dependency>
+            <groupId>zql.CallRope</groupId>
+            <artifactId>CallRope-spy</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>zql.CallRope</groupId>
+            <artifactId>CallRope-dubbo-facafe-api-example</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!--  spring-boot  -->
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- dubbo 整合 spring-boot -->
+        <dependency>
+            <groupId>com.alibaba.boot</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+            <version>0.2.0</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>

@@ -1,12 +1,13 @@
 package zql.CallRope.springBootDemo.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static zql.CallRope.springBootDemo.GlobalThreadPoolBuffer.GlabalThreadPoolUtils.threadLocal;
 import static zql.CallRope.springBootDemo.GlobalThreadPoolBuffer.GlabalThreadPoolUtils.threadPoolExecutor;
 
 @RestController
+@RequestMapping("/login")
 public class loginController {
 
     @GetMapping("/test/user/zql/114514")
@@ -18,6 +19,7 @@ public class loginController {
                 System.out.println("我是异步任务！");
             }
         });
+        System.out.println(Thread.currentThread().getContextClassLoader() + "   {context}");
         threadPoolExecutor.submit(() -> {
             System.out.println(this.getClass().getClassLoader());
             System.out.println(this.getClass());

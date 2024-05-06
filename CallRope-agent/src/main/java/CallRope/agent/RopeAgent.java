@@ -1,7 +1,6 @@
 package CallRope.agent;
 
 import CallRope.agent.classloader.CallRopeClassLoader;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.lang.instrument.ClassFileTransformer;
@@ -10,7 +9,6 @@ import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.util.jar.JarFile;
 
-@Slf4j
 public class RopeAgent {
     private static final String USER_HOME = System.getProperty("user.home");
     private static final String CALLROPE_SPY_JAR = USER_HOME + "/CallRope/callRope-spy.jar";
@@ -36,17 +34,14 @@ public class RopeAgent {
         try {
             System.out.println("获取到的参数" + agentOps);
             // 添加监视包路径
-            log.info("CallRope start...");
             File agentSpyFile =new File(CALLROPE_SPY_JAR);
             if(!agentSpyFile.exists()){
-                log.info("Spy jar file does not exist: " + CALLROPE_SPY_JAR);
                 return;
             }
             // 使用自定义加载器加载 CALLROPE_CORE_JAR,防止污染线上的代码
             instrumentation.appendToBootstrapClassLoaderSearch(new JarFile(agentSpyFile));
             File agentCoreFile =new File(CALLROPE_CORE_JAR);
             if(!agentCoreFile.exists()){
-                log.info("Agent-core jar file does not exist:" + CALLROPE_CORE_JAR);
                 return;
             }
             ClassLoader callRopeClassLoader = getClassLoader(agentCoreFile);

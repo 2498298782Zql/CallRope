@@ -34,6 +34,7 @@ public enum CommonMethodImplEnum implements ClassAdaptor {
                     || "getClass".equals(ctBehavior.getName())
                     || "equals".equals(ctBehavior.getName())
                     || "hashCode".equals(ctBehavior.getName())) {
+
                 return;
             }
             String methodName = isConstructor ? ctBehavior.getName() + "#" : ctBehavior.getName();

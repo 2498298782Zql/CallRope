@@ -10,7 +10,6 @@ import java.util.Map;
 
 public enum HttpMethodImplEnum implements ClassAdaptor {
     SpringBootControllerAdaptorImpl { // 适配springboot
-
         @Override
         public byte[] modifyClass(ClassInfo classInfo, String spyJarPath) {
             return new byte[0];

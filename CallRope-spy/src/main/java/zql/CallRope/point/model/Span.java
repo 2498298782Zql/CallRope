@@ -19,7 +19,7 @@ public class Span {
 
 
     protected Span(String traceId, String spanId, String pspanId, String serviceName, String methodName,
-                   SpanEnvironment env, long start, long end, long duration, Map<String, Object> LogInfos) {
+                   SpanEnvironment env, long start, long end, long duration, Map<String, Object> logInfos) {
         this.traceId = traceId;
         this.spanId = spanId;
         this.pspanId = pspanId;

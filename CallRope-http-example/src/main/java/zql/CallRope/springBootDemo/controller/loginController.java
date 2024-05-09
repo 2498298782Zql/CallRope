@@ -3,9 +3,7 @@ package zql.CallRope.springBootDemo.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import static zql.CallRope.springBootDemo.GlobalThreadPoolBuffer.GlabalThreadPoolUtils.threadPoolExecutor;
-
 @RestController
 @RequestMapping("/login")
 public class loginController {

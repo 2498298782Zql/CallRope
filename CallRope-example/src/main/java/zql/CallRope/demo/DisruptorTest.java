@@ -11,16 +11,8 @@ public class DisruptorTest {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for(int i =0 ;i< 100;i++){
-                    producer.onData(new SpanBuilder(i+"d", "2", "demp","demo","demo").build());
-                }
-            }
-        }).start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for(int i = 500 ;i< 600;i++){
-                    producer.onData(new SpanBuilder(i+"d", "2", "demp","demo","demo").build());
+                for(int i =0 ;i< 10;i++){
+                    producer.onData(new SpanBuilder(i+"", "2", "demp","demo","demo").build());
                 }
             }
         }).start();

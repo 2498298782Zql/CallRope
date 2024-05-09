@@ -10,4 +10,8 @@ public class DataEvent<T> {
     public void setData(T data) {
         this.data = data;
     }
+
+    public void clear(){
+        this.data = null;
+    }
 }

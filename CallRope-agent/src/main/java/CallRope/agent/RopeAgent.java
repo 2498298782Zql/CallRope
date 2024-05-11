@@ -32,7 +32,6 @@ public class RopeAgent {
     }
     public static void main(String agentOps,Instrumentation instrumentation){
         try {
-            System.out.println("获取到的参数" + agentOps);
             // 添加监视包路径
             File agentSpyFile =new File(CALLROPE_SPY_JAR);
             if(!agentSpyFile.exists()){

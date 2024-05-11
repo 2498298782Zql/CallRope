@@ -6,6 +6,9 @@ import zql.CallRope.core.instrumentation.ClassInfo;
 
 import static zql.CallRope.core.util.JavassistUtils.*;
 
+
+// 加强普通方法的逻辑
+// 弃用
 public enum CommonMethodImplEnum implements ClassAdaptor {
     MethodAdaptorImpl{
         @Override

@@ -13,24 +13,13 @@ public class loginController {
         threadPoolExecutor.submit(new Runnable() {
             @Override
             public void run() {
-                System.out.println("hello world");
                 System.out.println("我是异步任务！");
             }
         });
         System.out.println(Thread.currentThread().getContextClassLoader() + "   {context}");
         threadPoolExecutor.submit(() -> {
-            System.out.println(this.getClass().getClassLoader());
-            System.out.println(this.getClass());
-            System.out.println(this.getClass().toString());
             System.out.println("我是lambda表达式");
         });
-        threadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("exeeeeeeeee");
-            }
-        });
-        System.out.println("睡了3秒");
         return "hello zql";
     }
 

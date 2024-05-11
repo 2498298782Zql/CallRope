@@ -25,17 +25,13 @@ public class SpringBootControllerTransformer implements transformer {
             return;
         }
         try {
-            System.out.println("-----------------------------------------------");
-            System.out.println(classInfo.getClassName());
             CtClass ctClass = classInfo.getCtClass();
             String serviceName = ctClass.getName();
             if (!ctClass.hasAnnotation(RESTCONTROLLER_ANNOTATION) && !ctClass.hasAnnotation(CONTROLLER_ANNOTATION)) {
                 return;
             }
-            System.out.println("2 : " + classInfo.getClassName());
             CtMethod[] declaredMethods = ctClass.getDeclaredMethods();
             for (CtMethod ctMethod : declaredMethods) {
-                System.out.println(ctMethod + "==================");
                 if (ctMethod.hasAnnotation(REQUESTMAPPING_ANNOTATION)
                         || ctMethod.hasAnnotation(GETMAPPING_ANNOTATION)
                         || ctMethod.hasAnnotation(POSTTMAPPING_ANNOTATION)
@@ -44,7 +40,6 @@ public class SpringBootControllerTransformer implements transformer {
                     CtClass request = classPool.get("javax.servlet.http.HttpServletRequest");
                     ctMethod.insertParameter(request);
                     String methodName = ctMethod.getName();
-                    System.out.println("111111111 : " + classInfo.getClassName());
                     StringBuilder codeBefore = new StringBuilder();
                     codeBefore.append("\n");
                     codeBefore.append("javax.servlet.http.HttpServletRequest requestDuplicate= $1;\n");

@@ -19,7 +19,6 @@ public class JdkExecutorTtlTransformlet implements transformer {
     protected final boolean disableInheritableForThreadPool = false; // 是否需要基于线程池的跨线程传递
 
     protected static final String THREAD_POOL_EXECUTOR_CLASS_NAME = "java.util.concurrent.ThreadPoolExecutor";
-    protected static final String ABSTRACTEXECUTORSERVICE_CLASS_NAME = "java.util.concurrent.AbstractExecutorService";
     private final Map<String, String> paramTypeNameToDecorateMethodClass = new HashMap<>();
 
     public JdkExecutorTtlTransformlet() {
@@ -33,7 +32,6 @@ public class JdkExecutorTtlTransformlet implements transformer {
             String className = classInfo.getClassName();
             if (isClassAtPackageJavaUtil(className)) return;
             if (className.equals(THREAD_POOL_EXECUTOR_CLASS_NAME)) {
-                System.out.println("1 : " + className);
                 CtClass ctClass = classInfo.getCtClass();
                 if (ctClass == null) {
                     return;

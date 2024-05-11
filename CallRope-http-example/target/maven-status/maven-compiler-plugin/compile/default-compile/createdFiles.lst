@@ -10,4 +10,3 @@ zql\CallRope\springBootDemo\config\Config.class
 zql\CallRope\springBootDemo\filter\dubboFilter.class
 zql\CallRope\springBootDemo\controller\loginController$1.class
 zql\CallRope\springBootDemo\handler\UserLoginInterceptor.class
-zql\CallRope\springBootDemo\controller\loginController$2.class

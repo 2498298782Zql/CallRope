@@ -10,10 +10,6 @@ import static com.alibaba.dubbo.common.Constants.PROVIDER;
 public class producerFilter implements Filter {
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-        System.out.println("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-        String zql = invocation.getAttachment("zql");
-        System.out.println(RpcContext.getContext().getAttachment("key-test1"));
-        System.out.println(zql);
         return invoker.invoke(invocation);
     }
 }

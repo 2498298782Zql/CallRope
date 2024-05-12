@@ -28,7 +28,7 @@ public class SpanBuilder {
 
 
     public SpanBuilder withEnv(SpanEnvironment env) {
-        this.span = span;
+        span.env = env;
         return this;
     }
 
@@ -59,5 +59,14 @@ public class SpanBuilder {
 
     public Span build() {
         return span;
+    }
+
+    public static void fix(Span span){
+        if(span.spanId == null || span.spanId.trim() == ""){
+            span.spanId = "1";
+        }
+        if(span.pspanId == null){
+            span.pspanId = "null";
+        }
     }
 }

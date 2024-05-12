@@ -38,6 +38,7 @@ public class SpanConsumer {
                     for (MessageExt msg : msgs) {
                         try {
                             Span span = JSONObject.parseObject(msg.getBody(), Span.class);
+                            System.out.println(span + ".../////////////////");
                             Result result = EsUtil.addDocument(ES_INDEX, span, span.traceId + "_" + span.spanId);
                         } catch (ObjectNotFoundException e) {
                             e.printStackTrace();

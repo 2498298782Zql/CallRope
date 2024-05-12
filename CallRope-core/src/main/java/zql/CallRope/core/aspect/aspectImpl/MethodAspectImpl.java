@@ -5,8 +5,6 @@ import java.util.Map;
 
 
 public class MethodAspectImpl implements MethodAspect {
-
-
     @Override
     public void before(Class<?> clazz, String methodName, String methodDesc, Object target, Map<String,Object> infos) throws Throwable {
         System.out.println("before");

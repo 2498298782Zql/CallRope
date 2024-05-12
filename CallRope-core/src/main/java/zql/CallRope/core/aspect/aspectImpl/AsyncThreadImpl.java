@@ -17,7 +17,7 @@ public class AsyncThreadImpl implements AsyncThreadAspect {
     @Override
     public void enter(Span timeSpan, boolean isAsyncThread, Map<String, Object> infos) {
         Span span = new SpanBuilder(timeSpan.traceId, timeSpan.spanId, timeSpan.pspanId,
-                timeSpan.ServiceName, timeSpan.MethodName).withStart(System.currentTimeMillis())
+                timeSpan.serviceName, timeSpan.methodName).withStart(System.currentTimeMillis())
                 .withIsAsyncThread(isAsyncThread).withEnv(SpanEnvironment.PRODUCTION_ENVIRONMENT)
                 .withMapLogInfos(infos).build();
         Trace.spanTtl.set(span);

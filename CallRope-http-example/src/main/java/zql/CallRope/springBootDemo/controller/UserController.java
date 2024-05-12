@@ -6,6 +6,9 @@ import com.demo.UserInfoVO;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -28,7 +31,7 @@ public class UserController {
      */
     @RequestMapping("/list")
     public Object listUser() {
-        System.out.println(Thread.currentThread().getName() + "  业务");
+        userApiService.listUser();
         return userApiService.listUser();
     }
 }

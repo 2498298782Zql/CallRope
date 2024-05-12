@@ -40,7 +40,7 @@ public class TtlRunnable implements Runnable, TtlEnhanced {
             Span oldSpan = (Span) Trace.spanTtl.get();
             // 真正的Runnable调用
             if (oldSpan != null) {
-                Span span = new SpanBuilder(oldSpan.traceId, oldSpan.spanId, oldSpan.pspanId, oldSpan.ServiceName, oldSpan.MethodName).withIsAsyncThread(true).build();
+                Span span = new SpanBuilder(oldSpan.traceId, oldSpan.spanId + "." + oldSpan.LevelSpanId(), oldSpan.spanId, oldSpan.serviceName, oldSpan.methodName).withIsAsyncThread(true).build();
                 Trace.spanTtl.set(span);
                 SpyAPI.atFrameworkEnter(span, null, new String[]{"SpringFrameworkAspectImpl"});
             }

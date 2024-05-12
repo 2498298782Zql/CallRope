@@ -42,7 +42,7 @@ public class DubboConsumerFilterTransformer implements transformer {
         code.append("}\n");
         code.append("com.alibaba.dubbo.rpc.RpcContext.getContext().setAttachment(\"rope-traceId\",traceId);\n");
         code.append("com.alibaba.dubbo.rpc.RpcContext.getContext().setAttachment(\"rope-pSpanId\",pSpanId);\n");
-        code.append("com.alibaba.dubbo.rpc.RpcContext.getContext().setAttachment(\"rope-spanId\", String.valueOf(spanTrace.getLevelSpanId()));\n");
+        code.append("com.alibaba.dubbo.rpc.RpcContext.getContext().setAttachment(\"rope-spanId\", String.valueOf(spanTrace.LevelSpanId()));\n");
         invoke.insertBefore(code.toString());
         classInfo.flag = true;
         classInfo.setModified();

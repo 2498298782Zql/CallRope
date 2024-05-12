@@ -18,6 +18,7 @@ public class TtlCallable<V> implements TtlEnhanced, Callable<V> {
         this.callable = callable;
         this.releaseTtlValueReferenceAfterCall = releaseTtlValueReferenceAfterCall;
     }
+
     @Override
     public V call() throws Exception {
         final Object captured = capturedRef.get();
@@ -28,20 +29,21 @@ public class TtlCallable<V> implements TtlEnhanced, Callable<V> {
         try {
             Span oldSpan = (Span) Trace.spanTtl.get();
             if (oldSpan != null) {
-                Span span = new SpanBuilder(oldSpan.traceId, oldSpan.spanId, oldSpan.pspanId, oldSpan.ServiceName, oldSpan.MethodName).withIsAsyncThread(true).build();
+                Span span = new SpanBuilder(oldSpan.traceId, oldSpan.spanId + "." + oldSpan.LevelSpanId(), oldSpan.spanId, oldSpan.serviceName, oldSpan.methodName).withIsAsyncThread(true).build();
                 Trace.spanTtl.set(span);
                 SpyAPI.atFrameworkEnter(span, null, new String[]{"SpringFrameworkAspectImpl"});
             }
             V result = callable.call();
             oldSpan = Trace.spanTtl.get();
-            if ( oldSpan != null) {
-                SpyAPI.atFrameworkExit(oldSpan, null, new  String[]{"SpringFrameworkAspectImpl"});
+            if (oldSpan != null) {
+                SpyAPI.atFrameworkExit(oldSpan, null, new String[]{"SpringFrameworkAspectImpl"});
             }
             return result;
         } finally {
             restore(backup);
         }
     }
+
     public static <V> TtlCallable get(Callable<V> callable) {
         return create(callable, false);
     }

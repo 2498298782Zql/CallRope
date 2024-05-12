@@ -31,18 +31,23 @@ public class DubboProducerFilterTransformer implements transformer {
         if (invoke == null) {
             throw new ClassNotFoundException(classInfo.getClassName() + ":缺少invoke方法");
         }
-        StringBuilder code = new StringBuilder();
-        code.append("String traceId = com.alibaba.dubbo.rpc.RpcContext.getContext().getAttachment(\"rope-traceId\");\n");
-        code.append("String pSpanId = com.alibaba.dubbo.rpc.RpcContext.getContext().getAttachment(\"rope-pSpanId\");");
-        code.append("String spanId = com.alibaba.dubbo.rpc.RpcContext.getContext().getAttachment(\"rope-spanId\");");
-        code.append("if(traceId == null || \"\".equals(traceId)){\n");
-        code.append("   traceId = zql.CallRope.point.IDutils.TraceIdGenerator.generateTraceId();\n");
-        code.append("}\n");
-        code.append("String serviceInterfaceName = $1.getUrl().getServiceInterface();\n");
-        code.append("String methodName = $2.getMethodName();\n");
-        code.append("zql.CallRope.point.model.Span span = new zql.CallRope.point.model.SpanBuilder(traceId,spanId,pSpanId, serviceInterfaceName, methodName).build();\n");
-        code.append("System.out.println(span + \"pppppppppppppp\");");
-        invoke.insertBefore(code.toString());
+        StringBuilder codeBefore = new StringBuilder();
+        codeBefore.append("String traceId = com.alibaba.dubbo.rpc.RpcContext.getContext().getAttachment(\"rope-traceId\");\n");
+        codeBefore.append("String pSpanId = com.alibaba.dubbo.rpc.RpcContext.getContext().getAttachment(\"rope-pSpanId\");");
+        codeBefore.append("String spanId = com.alibaba.dubbo.rpc.RpcContext.getContext().getAttachment(\"rope-spanId\");");
+        codeBefore.append("if(traceId == null || \"\".equals(traceId)){\n");
+        codeBefore.append("   traceId = zql.CallRope.point.IDutils.TraceIdGenerator.generateTraceId();\n");
+        codeBefore.append("}\n");
+        codeBefore.append("String serviceInterfaceName = $1.getUrl().getServiceInterface();\n");
+        codeBefore.append("String methodName = $2.getMethodName();\n");
+        codeBefore.append("zql.CallRope.point.model.Span span = new zql.CallRope.point.model.SpanBuilder(traceId,pSpanId + \".\" +  spanId, pSpanId, serviceInterfaceName, methodName).build();\n");
+        codeBefore.append("zql.CallRope.point.SpyAPI.atFrameworkEnter(span, null, new String[]{\"DubboProducerAspectImpl\"});\n");
+        codeBefore.append("zql.CallRope.point.Trace.spanTtl.set(span);");
+        StringBuilder codeAfter = new StringBuilder();
+        codeAfter.append("zql.CallRope.point.model.Span spanDupilicate = (zql.CallRope.point.model.Span)zql.CallRope.point.Trace.spanTtl.get();\n");
+        codeAfter.append("zql.CallRope.point.SpyAPI.atFrameworkExit(spanDupilicate, null, new String[]{\"DubboProducerAspectImpl\"});\n");
+        invoke.insertBefore(codeBefore.toString());
+        invoke.insertAfter(codeAfter.toString());
         classInfo.flag = true;
         classInfo.setModified();
     }

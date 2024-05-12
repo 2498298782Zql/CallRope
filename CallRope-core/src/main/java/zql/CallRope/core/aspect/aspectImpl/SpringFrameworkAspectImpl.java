@@ -4,6 +4,8 @@ import zql.CallRope.core.aspect.FrameworkAspect;
 import zql.CallRope.core.distruptor.DisruptorConfig;
 import zql.CallRope.core.distruptor.DisruptorProducer;
 import zql.CallRope.point.model.Span;
+import zql.CallRope.point.model.SpanBuilder;
+import zql.CallRope.point.model.SpanEnvironment;
 
 import java.util.Map;
 
@@ -14,7 +16,8 @@ public class SpringFrameworkAspectImpl implements FrameworkAspect {
     @Override
     public Object entry(Span span, Map<String, Object> infos) {
         span.start = System.currentTimeMillis();
-        System.out.println(span);
+        span.setEnv(SpanEnvironment.TEST_ENVIRONMENT);
+        SpanBuilder.fix(span);
         return span;
     }
 

@@ -30,9 +30,4 @@ public class DisruptorConfig {
         return disruptorManage.getProducer();
     }
 
-
-    private static String constructMessageFromSpan(Span span) {
-        // 根据 Span 构造消息
-        return "TraceId: " + span.traceId + ", SpanId: " + span.spanId + ", ServiceName: " + span.ServiceName + ", MethodName: " + span.MethodName;
-    }
 }

@@ -8,7 +8,6 @@ zql\CallRope\point\SpyAPI$DoNothingSpy.class
 zql\CallRope\point\model\LogType.class
 zql\CallRope\point\model\Span.class
 zql\CallRope\point\TtlRunnable.class
-zql\CallRope\point\SpyServiceManager.class
 zql\CallRope\point\Trace.class
 zql\CallRope\point\IDutils\TraceIdGenerator.class
 zql\CallRope\point\AutoWrap$1.class

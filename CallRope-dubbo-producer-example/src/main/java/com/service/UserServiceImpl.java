@@ -27,6 +27,11 @@ public class UserServiceImpl implements UserApiService {
      */
     @Override
     public List<UserInfoVO> listUser() {
+        try {
+            Thread.sleep(1000l);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return MockDataConstant.userMockList;
     }
 }

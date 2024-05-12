@@ -9,8 +9,8 @@ public class Span implements Serializable{
     public String traceId;
     public String spanId;
     public String pspanId;
-    public String ServiceName;  // appName
-    public String MethodName;
+    public String serviceName;  // appName
+    public String methodName;
     public SpanEnvironment env;
     public long start;
     public long end;
@@ -18,22 +18,22 @@ public class Span implements Serializable{
     public Map<String, Object> logInfos;
     public Boolean isAsyncThread;
 
-
     private Span() {
     }
 
-
-    public Integer getLevelSpanId(){
+    public Integer LevelSpanId(){
         return nextId.getAndIncrement();
     }
+
+
 
     protected Span(String traceId, String spanId, String pspanId, String serviceName, String methodName,
                    SpanEnvironment env, long start, long end, long duration, Map<String, Object> logInfos) {
         this.traceId = traceId;
         this.spanId = spanId;
         this.pspanId = pspanId;
-        ServiceName = serviceName;
-        MethodName = methodName;
+        this.serviceName = serviceName;
+        this.methodName = methodName;
         this.env = env;
         this.start = start;
         this.end = end;
@@ -46,8 +46,8 @@ public class Span implements Serializable{
         this.traceId = traceId;
         this.spanId = spanId;
         this.pspanId = pspanId;
-        ServiceName = serviceName;
-        MethodName = methodName;
+        this.serviceName = serviceName;
+        this.methodName = methodName;
         this.env = env;
         this.start = start;
         this.end = end;
@@ -61,8 +61,8 @@ public class Span implements Serializable{
         this.traceId = traceId;
         this.spanId = spanId;
         this.pspanId = pspanId;
-        ServiceName = serviceName;
-        MethodName = methodName;
+        this.serviceName = serviceName;
+        this.methodName = methodName;
     }
 
     @Override
@@ -71,8 +71,8 @@ public class Span implements Serializable{
                 "traceId='" + traceId + '\'' +
                 ", spanId='" + spanId + '\'' +
                 ", pspanId='" + pspanId + '\'' +
-                ", ServiceName='" + ServiceName + '\'' +
-                ", MethodName='" + MethodName + '\'' +
+                ", ServiceName='" + serviceName + '\'' +
+                ", MethodName='" + methodName + '\'' +
                 ", env=" + env +
                 ", start=" + start +
                 ", end=" + end +
@@ -107,19 +107,19 @@ public class Span implements Serializable{
     }
 
     public String getServiceName() {
-        return ServiceName;
+        return this.serviceName;
     }
 
     public void setServiceName(String serviceName) {
-        ServiceName = serviceName;
+        this.serviceName = serviceName;
     }
 
     public String getMethodName() {
-        return MethodName;
+        return this.methodName;
     }
 
     public void setMethodName(String methodName) {
-        MethodName = methodName;
+        this.methodName = methodName;
     }
 
     public SpanEnvironment getEnv() {

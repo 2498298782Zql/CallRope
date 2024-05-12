@@ -27,7 +27,6 @@ public class UserServiceImpl implements UserApiService {
      */
     @Override
     public List<UserInfoVO> listUser() {
-        System.out.println("listUser");
         return MockDataConstant.userMockList;
     }
 }

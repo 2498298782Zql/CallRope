@@ -14,6 +14,7 @@ public class SpringFrameworkAspectImpl implements FrameworkAspect {
     @Override
     public Object entry(Span span, Map<String, Object> infos) {
         span.start = System.currentTimeMillis();
+        System.out.println(span);
         return span;
     }
 

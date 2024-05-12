@@ -1,4 +1,5 @@
 C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\adaptor\adaptorImpl\HttpMethodImplEnum.java
+C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\aspect\aspectImpl\DubboProducerAspectImpl.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\instrumentation\transformer.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\instrumentation\dubbo\DubboConsumerFilterTransformer.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\instrumentation\dubbo\DubboProducerFilterTransformer.java
@@ -7,6 +8,7 @@ C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\cor
 C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\distruptor\DisruptorProducer.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\distruptor\DisruptorThreadFactory.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\adaptor\ClassAdaptor.java
+C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\aspect\aspectSPI\aspectManager.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\instrumentation\ClassInfo.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\aspect\FrameworkAspect.java
 C:\Users\24982\Desktop\mit\CallRope\CallRope-core\src\main\java\zql\CallRope\core\aspect\SpyImpl.java

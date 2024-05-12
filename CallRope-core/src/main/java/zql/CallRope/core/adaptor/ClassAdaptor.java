@@ -7,7 +7,7 @@ import zql.CallRope.core.instrumentation.ClassInfo;
 
 import java.util.HashMap;
 import java.util.Map;
-
+// 目前废弃
 public interface ClassAdaptor {
     Map<String,ClassAdaptor> supportClassMap = new HashMap<>(); // public static final
 

@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class DubboProducerFilterTransformer implements transformer {
-    private static final String TRACE_ID = "CallRopeTraceId";
     private static Set<String> filterProviderInvoke = new HashSet<String>();
 
     static {
@@ -33,12 +32,16 @@ public class DubboProducerFilterTransformer implements transformer {
             throw new ClassNotFoundException(classInfo.getClassName() + ":缺少invoke方法");
         }
         StringBuilder code = new StringBuilder();
-        code.append("String traceId = com.alibaba.dubbo.rpc.RpcContext.getContext().getAttachment(\"key-rope\");\n");
+        code.append("String traceId = com.alibaba.dubbo.rpc.RpcContext.getContext().getAttachment(\"rope-traceId\");\n");
+        code.append("String pSpanId = com.alibaba.dubbo.rpc.RpcContext.getContext().getAttachment(\"rope-pSpanId\");");
+        code.append("String spanId = com.alibaba.dubbo.rpc.RpcContext.getContext().getAttachment(\"rope-spanId\");");
         code.append("if(traceId == null || \"\".equals(traceId)){\n");
         code.append("   traceId = zql.CallRope.point.IDutils.TraceIdGenerator.generateTraceId();\n");
         code.append("}\n");
-        code.append("System.out.println(traceId + \": producer\");");
-        code.append(String.format("zql.CallRope.point.Trace.spanTtl.set(\"%s\");", TRACE_ID));
+        code.append("String serviceInterfaceName = $1.getUrl().getServiceInterface();\n");
+        code.append("String methodName = $2.getMethodName();\n");
+        code.append("zql.CallRope.point.model.Span span = new zql.CallRope.point.model.SpanBuilder(traceId,spanId,pSpanId, serviceInterfaceName, methodName).build();\n");
+        code.append("System.out.println(span + \"pppppppppppppp\");");
         invoke.insertBefore(code.toString());
         classInfo.flag = true;
         classInfo.setModified();

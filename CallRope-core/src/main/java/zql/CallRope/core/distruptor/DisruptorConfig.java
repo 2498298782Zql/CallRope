@@ -6,12 +6,15 @@ import zql.CallRope.core.rocketmq.SpanProducer;
 import zql.CallRope.point.model.Span;
 public class DisruptorConfig {
 
+    static {
+        SpanConsumer.start();
+    }
+
     public static DataEventListener<Span> createConsumerListener() {
         DataEventListener<Span> dataEventListener = new DataEventListener<Span>() {
             @Override
             public void processDataEvent(DataEvent<Span> dataEvent) {
                 SpanProducer.sendSpanToRocketMq(dataEvent.getData());
-                System.out.println(dataEvent.getData());
                 dataEvent.clear();
             }
         };
@@ -24,7 +27,6 @@ public class DisruptorConfig {
                 8,
                 1024 * 1024);
         disruptorManage.start();
-        SpanConsumer.start();
         return disruptorManage.getProducer();
     }
 

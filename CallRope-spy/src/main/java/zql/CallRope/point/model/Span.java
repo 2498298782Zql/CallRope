@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Span implements Serializable{
-    private final transient AtomicInteger nextId = new AtomicInteger(0);// 用于同一层级的spanId自增
+    private final transient AtomicInteger nextId = new AtomicInteger(1);// 用于同一层级的spanId自增
     public String traceId;
     public String spanId;
     public String pspanId;
@@ -22,6 +22,10 @@ public class Span implements Serializable{
     private Span() {
     }
 
+
+    public Integer getLevelSpanId(){
+        return nextId.getAndIncrement();
+    }
 
     protected Span(String traceId, String spanId, String pspanId, String serviceName, String methodName,
                    SpanEnvironment env, long start, long end, long duration, Map<String, Object> logInfos) {

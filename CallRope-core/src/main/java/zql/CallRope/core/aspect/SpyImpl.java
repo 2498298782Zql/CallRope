@@ -1,31 +1,61 @@
 package zql.CallRope.core.aspect;
-
-import zql.CallRope.core.aspect.aspectImpl.AsyncThreadImpl;
-import zql.CallRope.core.aspect.aspectImpl.MethodAspectImpl;
-import zql.CallRope.core.aspect.aspectImpl.SpringFrameworkAspectImpl;
+import zql.CallRope.core.aspect.aspectSPI.aspectManager;
 import zql.CallRope.point.SpyAPI;
 import zql.CallRope.point.SpySPI;
 import zql.CallRope.point.model.Span;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 public class SpyImpl implements SpySPI {
-    private static List<MethodAspect> methodAspects;
-    private static List<FrameworkAspect> springFrameworkAspects;
-    private static List<AsyncThreadAspect> asyncThreadAspects;
+    private volatile static Map<String, MethodAspect> methodAspects;
+
+    private volatile static Map<String, FrameworkAspect> frameworkAspects;
+
+    private volatile static Map<String, AsyncThreadAspect> asyncThreadAspects;
 
 
     public static void init() {
-        methodAspects = new ArrayList<>();
-        springFrameworkAspects = new ArrayList<>();
-        asyncThreadAspects = new ArrayList<>();
-        methodAspects.add(new MethodAspectImpl());
-        springFrameworkAspects.add(new SpringFrameworkAspectImpl());
-        asyncThreadAspects.add(new AsyncThreadImpl());
+        methodAspects = createMethodAspectsMap(methodAspects);
+        frameworkAspects = createFrameworkAspectsMap(frameworkAspects);
+        asyncThreadAspects = createAsyncThreadAspectsMap(asyncThreadAspects);
+        aspectManager.init(methodAspects,frameworkAspects, asyncThreadAspects);
         SpyAPI.setSpy(new SpyImpl());
+    }
+
+    private static Map<String, MethodAspect> createMethodAspectsMap(Map<String, MethodAspect> map) {
+        if (map == null) {
+            synchronized (SpyImpl.class) {
+                if (map == null) {
+                    return new HashMap<String, MethodAspect>();
+                }
+            }
+        }
+        return map;
+    }
+
+    private static Map<String, FrameworkAspect> createFrameworkAspectsMap(Map<String, FrameworkAspect> map) {
+        if (map == null) {
+            synchronized (SpyImpl.class) {
+                if (map == null) {
+                    return new HashMap<String, FrameworkAspect>();
+                }
+            }
+        }
+        return map;
+    }
+
+    private static Map<String, AsyncThreadAspect> createAsyncThreadAspectsMap(Map<String, AsyncThreadAspect> map) {
+        if (map == null) {
+            synchronized (SpyImpl.class) {
+                if (map == null) {
+                    return new HashMap<String, AsyncThreadAspect>();
+                }
+            }
+        }
+        return map;
     }
 
     @Override
@@ -34,8 +64,8 @@ public class SpyImpl implements SpySPI {
             String[] methodInfos = splitMethodInfo(methodInfo);
             String methodName = methodInfos[0];
             String methodDesc = methodInfos[1];
-            for (MethodAspect methodAspect : methodAspects) {
-                methodAspect.before(clazz, methodName, methodDesc, target, infos);
+            for (Map.Entry<String, MethodAspect> methodAspectEntry: methodAspects.entrySet()) {
+                methodAspectEntry.getValue().before(clazz, methodName, methodDesc, target, infos);
             }
         } catch (Throwable e) {
             e.printStackTrace();
@@ -48,8 +78,8 @@ public class SpyImpl implements SpySPI {
             String[] methodInfos = splitMethodInfo(methodInfo);
             String methodName = methodInfos[0];
             String methodDesc = methodInfos[1];
-            for (MethodAspect methodAspect : methodAspects) {
-                methodAspect.after(clazz, methodName, methodDesc, target, returnObject, infos);
+            for (Map.Entry<String, MethodAspect> methodAspectEntry: methodAspects.entrySet()) {
+                methodAspectEntry.getValue().after(clazz, methodName, methodDesc, target, returnObject, infos);
             }
         } catch (Throwable e) {
             e.printStackTrace();
@@ -62,8 +92,8 @@ public class SpyImpl implements SpySPI {
             String[] methodInfos = splitMethodInfo(methodInfo);
             String methodName = methodInfos[0];
             String methodDesc = methodInfos[1];
-            for (MethodAspect methodAspect : methodAspects) {
-                methodAspect.error(clazz, methodName, methodDesc, target, infos, throwable);
+            for (Map.Entry<String, MethodAspect> methodAspectEntry: methodAspects.entrySet()) {
+                methodAspectEntry.getValue().error(clazz, methodName, methodDesc, target, infos, throwable);
             }
         } catch (Throwable e) {
             e.printStackTrace();
@@ -71,45 +101,40 @@ public class SpyImpl implements SpySPI {
     }
 
     @Override
-    public void atFrameworkEnter(Span span, Map<String, Object> infos) {
-        for (FrameworkAspect frameworkAspect : springFrameworkAspects) {
-            try {
-                frameworkAspect.entry(span, infos);
-            } catch (Throwable e) {
-                e.printStackTrace();
+    public void atFrameworkEnter(Span span, Map<String, Object> infos, String[] enhanceCLassnames) {
+        for(String enhance : enhanceCLassnames){
+            System.out.println(enhance);
+            System.out.println(frameworkAspects.keySet());
+            if(frameworkAspects.containsKey(enhance)){
+                frameworkAspects.get(enhance).entry(span, infos);
             }
         }
     }
 
     @Override
-    public void atFrameworkExit(Span span, Map<String, Object> infos) {
-        for (FrameworkAspect frameworkAspect : springFrameworkAspects) {
-            try {
-                frameworkAspect.exit(span, infos);
-            } catch (Throwable e) {
-                e.printStackTrace();
+    public void atFrameworkExit(Span span, Map<String, Object> infos, String[] enhanceCLassnames) {
+        for(String enhance: enhanceCLassnames){
+
+            if(frameworkAspects.containsKey(enhance)){
+                frameworkAspects.get(enhance).exit(span, infos);
             }
         }
     }
 
     @Override
-    public void atFrameThreadPoolEnter(Span span) {
-        for (AsyncThreadAspect asyncThreadAspect : asyncThreadAspects) {
-            try {
-                asyncThreadAspect.enter(span, true, null);
-            } catch (Throwable e) {
-                e.printStackTrace();
+    public void atFrameThreadPoolEnter(Span span, String[] enhanceCLassnames) {
+        for(String enhance: enhanceCLassnames){
+            if(asyncThreadAspects.containsKey(enhance)){
+                asyncThreadAspects.get(enhance).enter(span, true, null);
             }
         }
     }
 
     @Override
-    public void atFrameThreadPoolExit(Span span) {
-        for (AsyncThreadAspect asyncThreadAspect : asyncThreadAspects) {
-            try {
-                asyncThreadAspect.exit(span, true, null);
-            } catch (Throwable e) {
-                e.printStackTrace();
+    public void atFrameThreadPoolExit(Span span, String[] enhanceCLassnames) {
+        for(String enhance: enhanceCLassnames){
+            if(asyncThreadAspects.containsKey(enhance)){
+                asyncThreadAspects.get(enhance).exit(span, true, null);
             }
         }
     }

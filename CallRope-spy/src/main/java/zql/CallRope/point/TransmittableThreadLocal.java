@@ -1,7 +1,5 @@
 package zql.CallRope.point;
 
-import zql.CallRope.point.model.Span;
-
 import java.util.Iterator;
 import java.util.Map;
 import java.util.WeakHashMap;

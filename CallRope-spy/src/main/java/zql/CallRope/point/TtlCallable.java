@@ -30,12 +30,12 @@ public class TtlCallable<V> implements TtlEnhanced, Callable<V> {
             if (oldSpan != null) {
                 Span span = new SpanBuilder(oldSpan.traceId, oldSpan.spanId, oldSpan.pspanId, oldSpan.ServiceName, oldSpan.MethodName).withIsAsyncThread(true).build();
                 Trace.spanTtl.set(span);
-                SpyAPI.atFrameworkEnter(span, null);
+                SpyAPI.atFrameworkEnter(span, null, new String[]{"SpringFrameworkAspectImpl"});
             }
             V result = callable.call();
             oldSpan = Trace.spanTtl.get();
             if ( oldSpan != null) {
-                SpyAPI.atFrameworkExit(oldSpan, null);
+                SpyAPI.atFrameworkExit(oldSpan, null, new  String[]{"SpringFrameworkAspectImpl"});
             }
             return result;
         } finally {

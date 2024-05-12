@@ -11,11 +11,11 @@ public interface SpySPI {
 
     public void atExceptionExit(Class<?> clazz, String methodInfo, Object target, Map<String, Object> infos, Throwable throwable);
 
-    public void atFrameworkEnter(Span span, Map<String, Object> infos);
+    public void atFrameworkEnter(Span span, Map<String, Object> infos, String[] enhanceCLassnames);
 
-    public void atFrameworkExit(Span span, Map<String, Object> infos);
+    public void atFrameworkExit(Span span, Map<String, Object> infos, String[] enhanceCLassnames);
 
-    public void atFrameThreadPoolEnter(Span span);
+    public void atFrameThreadPoolEnter(Span span, String[] enhanceCLassnames);
 
-    public void atFrameThreadPoolExit(Span span);
+    public void atFrameThreadPoolExit(Span span,  String[] enhanceCLassnames);
 }

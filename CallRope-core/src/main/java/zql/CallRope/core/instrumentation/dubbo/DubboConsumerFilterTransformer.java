@@ -6,6 +6,7 @@ import javassist.CtMethod;
 import javassist.NotFoundException;
 import zql.CallRope.core.instrumentation.ClassInfo;
 import zql.CallRope.core.instrumentation.transformer;
+import zql.CallRope.point.model.Span;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -24,7 +25,6 @@ public class DubboConsumerFilterTransformer implements transformer {
         if(!filterConsumerInvoke.contains(classInfo.getClassName())){
             return;
         }
-        System.out.println(classInfo.getClassName());
         CtClass ctClass = classInfo.getCtClass();
         if(ctClass == null){
             throw new ClassNotFoundException(classInfo.getClassName() + ":没有这个类");
@@ -36,11 +36,13 @@ public class DubboConsumerFilterTransformer implements transformer {
         StringBuilder code = new StringBuilder();
         code.append("zql.CallRope.point.model.Span spanTrace = (zql.CallRope.point.model.Span)zql.CallRope.point.Trace.spanTtl.get();\n");
         code.append("String traceId = spanTrace.traceId;\n");
-        code.append("System.out.println(traceId + \":++++++++++++++++++\");\n");
+        code.append("String pSpanId = spanTrace.spanId;");
         code.append("if(spanTrace == null){\n");
         code.append("   traceId = zql.CallRope.point.IDutils.TraceIdGenerator.generateTraceId();\n");
         code.append("}\n");
-        code.append("com.alibaba.dubbo.rpc.RpcContext.getContext().setAttachment(\"key-rope\",traceId);\n");
+        code.append("com.alibaba.dubbo.rpc.RpcContext.getContext().setAttachment(\"rope-traceId\",traceId);\n");
+        code.append("com.alibaba.dubbo.rpc.RpcContext.getContext().setAttachment(\"rope-pSpanId\",pSpanId);\n");
+        code.append("com.alibaba.dubbo.rpc.RpcContext.getContext().setAttachment(\"rope-spanId\", String.valueOf(spanTrace.getLevelSpanId()));\n");
         invoke.insertBefore(code.toString());
         classInfo.flag = true;
         classInfo.setModified();

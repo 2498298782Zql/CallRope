@@ -1,7 +1,6 @@
 package zql.CallRope.core.instrumentation;
 
 import javassist.*;
-import zql.CallRope.core.adaptor.ClassAdaptor;
 import zql.CallRope.core.aspect.SpyImpl;
 import zql.CallRope.core.instrumentation.dubbo.DubboConsumerFilterTransformer;
 import zql.CallRope.core.instrumentation.dubbo.DubboProducerFilterTransformer;
@@ -24,7 +23,6 @@ public class CallRopeClassfileTransformer implements ClassFileTransformer {
     public CallRopeClassfileTransformer(String spyJarPath) {
         this.SPY_JAR_PATH = spyJarPath;
         SpyImpl.init();
-        ClassAdaptor.init();
     }
 
     static {
@@ -42,6 +40,7 @@ public class CallRopeClassfileTransformer implements ClassFileTransformer {
             if (className == null) return classfileBuffer;
             ClassInfo classInfo = new ClassInfo(className, classfileBuffer, loader, protectionDomain);
             if (isClassUnderPackage(classInfo.getClassName(), "java.lang")) return NO_TRANSFORM;
+            // 责任链
             for (transformer transformer : transformerList) {
                 transformer.doTransform(classInfo);
                 if (classInfo.isModified()) {

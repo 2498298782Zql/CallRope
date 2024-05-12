@@ -33,7 +33,6 @@ public class SpyServiceManager {
         try (FileWriter fw = new FileWriter("META-INF/services/zql.CallRope.point.SpySPI", true);
              BufferedWriter bw = new BufferedWriter(fw);
              PrintWriter out = new PrintWriter(bw)) {
-            out.println(className);
         } catch (IOException e) {
             e.printStackTrace();
         }

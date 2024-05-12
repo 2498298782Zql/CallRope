@@ -7,7 +7,7 @@ import java.util.concurrent.Callable;
 
 public class SpyAPI {
     public static final SpySPI doNothingSpy = new DoNothingSpy();
-    public static volatile SpySPI spyInstance = doNothingSpy;
+    private static volatile SpySPI spyInstance = doNothingSpy;
     private static volatile boolean inited = false;
 
 
@@ -43,20 +43,20 @@ public class SpyAPI {
         spyInstance.atExceptionExit(clazz, methodInfo, target, infos, throwable);
     }
 
-    public static void atFrameworkEnter(Span span, Map<String, Object> infos) {
-        spyInstance.atFrameworkEnter(span, infos);
+    public static void atFrameworkEnter(Span span, Map<String, Object> infos, String[] enhanceCLassnames) {
+        spyInstance.atFrameworkEnter(span, infos,enhanceCLassnames);
     }
 
-    public static void atFrameworkExit(Span span, Map<String, Object> infos) {
-        spyInstance.atFrameworkExit(span, infos);
+    public static void atFrameworkExit(Span span, Map<String, Object> infos, String[] enhanceCLassnames) {
+        spyInstance.atFrameworkExit(span, infos, enhanceCLassnames);
     }
 
-    public static void atFrameThreadPoolEnter(Span span) {
-        spyInstance.atFrameThreadPoolEnter(span);
+    public static void atFrameThreadPoolEnter(Span span,String[] enhanceCLassnames) {
+        spyInstance.atFrameThreadPoolEnter(span,enhanceCLassnames);
     }
 
-    public static void atFrameThreadPoolExit(Span span) {
-        spyInstance.atFrameThreadPoolExit(span);
+    public static void atFrameThreadPoolExit(Span span, String[] enhanceCLassnames) {
+        spyInstance.atFrameThreadPoolExit(span, enhanceCLassnames);
     }
 
     private static class DoNothingSpy implements SpySPI {
@@ -73,21 +73,23 @@ public class SpyAPI {
         }
 
         @Override
-        public void atFrameworkEnter(Span span, Map<String, Object> infos) {
-            System.out.println("fake!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        public void atFrameworkEnter(Span span, Map<String, Object> infos, String[] enhanceCLassnames) {
+
         }
 
         @Override
-        public void atFrameworkExit(Span span, Map<String, Object> infos) {
-            System.out.println("fake!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        public void atFrameworkExit(Span span, Map<String, Object> infos, String[] enhanceCLassnames) {
+
         }
 
         @Override
-        public void atFrameThreadPoolEnter(Span span) {
+        public void atFrameThreadPoolEnter(Span span, String[] enhanceCLassnames) {
+
         }
 
         @Override
-        public void atFrameThreadPoolExit(Span span) {
+        public void atFrameThreadPoolExit(Span span, String[] enhanceCLassnames) {
+
         }
     }
 }

@@ -6,6 +6,7 @@ import zql.CallRope.point.model.SpanBuilder;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static zql.CallRope.point.Trace.isThreadNameWithPrefix;
 import static zql.CallRope.point.TransmittableThreadLocal.Transmitter.*;
 
 public class TtlCallable<V> implements TtlEnhanced, Callable<V> {
@@ -21,6 +22,9 @@ public class TtlCallable<V> implements TtlEnhanced, Callable<V> {
 
     @Override
     public V call() throws Exception {
+        if (!isThreadNameWithPrefix()) {
+            return callable.call();
+        }
         final Object captured = capturedRef.get();
         if (captured == null || releaseTtlValueReferenceAfterCall && !capturedRef.compareAndSet(captured, null)) {
             throw new IllegalStateException("TTL value reference is released after call!");

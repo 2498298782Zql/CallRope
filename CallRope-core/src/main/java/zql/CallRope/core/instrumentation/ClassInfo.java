@@ -8,6 +8,8 @@ import javassist.NotFoundException;
 import java.io.IOException;
 import java.security.ProtectionDomain;
 
+import static zql.CallRope.core.config.Configuration.getProperty;
+
 public class ClassInfo {
     private final String transformerClassFile;
     private final String className;
@@ -15,10 +17,13 @@ public class ClassInfo {
     private final ClassLoader classLoader;
     private ProtectionDomain protectionDomain;
     private CtClass ctClass;
-    private static final String USER_HOME = System.getProperty("user.home");
-    public static final String CALLROPE_SPY_JAR = USER_HOME + "/CallRope/callRope-spy.jar";
+    public static String CALLROPE_SPY_JAR;
 
     public boolean flag = false;
+
+    static {
+        CALLROPE_SPY_JAR = getProperty("call_rope_spy_jar");
+    }
 
     public ClassInfo(String transformerClassFile, byte[] classFileBuffer, ClassLoader classLoader, ProtectionDomain protectionDomain) {
         this.transformerClassFile = transformerClassFile;

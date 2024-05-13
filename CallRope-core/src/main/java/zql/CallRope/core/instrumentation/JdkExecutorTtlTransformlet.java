@@ -59,7 +59,6 @@ public class JdkExecutorTtlTransformlet implements transformer {
             final String paramTypeName = parameterTypes[i].getName();
             if (paramTypeNameToDecorateMethodClass.containsKey(paramTypeName)) {
                 String code = String.format(
-                        // auto decorate to TTL wrapper
                         "$%d = zql.CallRope.point.AutoWrap.doAutoWrap($%<d);",
                         i + 1);
                 insertCode.append(code);

@@ -6,10 +6,11 @@ import zql.CallRope.core.util.JavassistUtils;
 
 import java.io.IOException;
 
+import static zql.CallRope.core.config.Configuration.getProperty;
+
 public class SpringBootControllerTransformer implements transformer {
-    private static final String USER_HOME = System.getProperty("user.home");
-    private static final String CALLROPE_SPY_JAR = USER_HOME + "/CallRope/callRope-spy.jar";
-    public static String controller_package = "zql.CallRope.springBootDemo.controller";
+    public static String controller_package_prefix;
+
     public static final String RESTCONTROLLER_ANNOTATION = "org.springframework.web.bind.annotation.RestController";
     public static final String CONTROLLER_ANNOTATION = "org.springframework.stereotype.Controller";
     public static final String REQUESTMAPPING_ANNOTATION = "org.springframework.web.bind.annotation.RequestMapping";
@@ -17,11 +18,13 @@ public class SpringBootControllerTransformer implements transformer {
     public static final String POSTTMAPPING_ANNOTATION = "org.springframework.web.bind.annotation.PostMapping";
     public static final String DELETEMAPPING_ANNOTATION = "org.springframework.web.bind.annotation.DeleteMapping";
 
-
+    static {
+        controller_package_prefix = getProperty("controller_package_prefix");
+    }
 
     @Override
     public void doTransform(ClassInfo classInfo) {
-        if (!classInfo.getClassName().startsWith(controller_package)) {
+        if (!classInfo.getClassName().startsWith(controller_package_prefix)) {
             return;
         }
         try {

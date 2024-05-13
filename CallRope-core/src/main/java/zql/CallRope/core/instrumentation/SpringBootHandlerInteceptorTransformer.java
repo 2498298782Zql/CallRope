@@ -4,8 +4,15 @@ import javassist.*;
 
 import java.io.IOException;
 
+import static zql.CallRope.core.config.Configuration.getProperty;
+
 public class SpringBootHandlerInteceptorTransformer implements transformer {
-    public static final String HANDLER_INTECEPTOR = "zql.CallRope.springBootDemo.handler.UserLoginInterceptor";
+    public static final String HANDLER_INTECEPTOR;
+
+
+    static {
+        HANDLER_INTECEPTOR = getProperty("enhance_interceptor_class");
+    }
 
     @Override
     public void doTransform(ClassInfo classInfo) {
@@ -13,7 +20,6 @@ public class SpringBootHandlerInteceptorTransformer implements transformer {
             return;
         }
         try {
-            System.out.println("3 : " + classInfo.getClassName());
             CtClass ctClass = classInfo.getCtClass();
             CtMethod preHandle = ctClass.getDeclaredMethod("preHandle");
             StringBuilder code = new StringBuilder();

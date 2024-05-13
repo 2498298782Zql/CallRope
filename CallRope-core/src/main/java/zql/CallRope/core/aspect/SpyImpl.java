@@ -103,8 +103,6 @@ public class SpyImpl implements SpySPI {
     @Override
     public void atFrameworkEnter(Span span, Map<String, Object> infos, String[] enhanceCLassnames) {
         for(String enhance : enhanceCLassnames){
-            System.out.println(enhance);
-            System.out.println(frameworkAspects.keySet());
             if(frameworkAspects.containsKey(enhance)){
                 frameworkAspects.get(enhance).entry(span, infos);
             }

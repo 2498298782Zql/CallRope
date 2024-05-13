@@ -162,11 +162,11 @@ public class Span implements Serializable{
         this.logInfos = logInfos;
     }
 
-    public Boolean getAsyncThread() {
+    public Boolean getIsAsyncThread() {
         return isAsyncThread;
     }
 
-    public void setAsyncThread(Boolean asyncThread) {
+    public void setIsAsyncThread(Boolean asyncThread) {
         isAsyncThread = asyncThread;
     }
 }

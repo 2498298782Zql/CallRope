@@ -8,14 +8,15 @@ import zql.CallRope.core.instrumentation.ClassInfo;
 import zql.CallRope.core.instrumentation.transformer;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
 
+import static zql.CallRope.core.config.Configuration.getPropertyAsSet;
+
 public class DubboProducerFilterTransformer implements transformer {
-    private static Set<String> filterProviderInvoke = new HashSet<String>();
+    private static Set<String> filterProviderInvoke;
 
     static {
-        filterProviderInvoke.add("com.filter.producerFilter");
+        filterProviderInvoke = getPropertyAsSet("filter_producer_class");
     }
 
     @Override
@@ -42,7 +43,7 @@ public class DubboProducerFilterTransformer implements transformer {
         codeBefore.append("String methodName = $2.getMethodName();\n");
         codeBefore.append("zql.CallRope.point.model.Span span = new zql.CallRope.point.model.SpanBuilder(traceId,pSpanId + \".\" +  spanId, pSpanId, serviceInterfaceName, methodName).build();\n");
         codeBefore.append("zql.CallRope.point.SpyAPI.atFrameworkEnter(span, null, new String[]{\"DubboProducerAspectImpl\"});\n");
-        codeBefore.append("zql.CallRope.point.Trace.spanTtl.set(span);");
+
         StringBuilder codeAfter = new StringBuilder();
         codeAfter.append("zql.CallRope.point.model.Span spanDupilicate = (zql.CallRope.point.model.Span)zql.CallRope.point.Trace.spanTtl.get();\n");
         codeAfter.append("zql.CallRope.point.SpyAPI.atFrameworkExit(spanDupilicate, null, new String[]{\"DubboProducerAspectImpl\"});\n");

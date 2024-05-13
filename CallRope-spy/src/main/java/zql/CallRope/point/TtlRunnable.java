@@ -23,11 +23,9 @@ public class TtlRunnable implements Runnable, TtlEnhanced {
         this.releaseTtlValueReferenceAfterRun = releaseTtlValueReferenceAfterRun;
     }
 
-
-
     @Override
     public void run() {
-        if (isThreadNameWithPrefix()) {
+        if (!isThreadNameWithPrefix()) {
             runnable.run();
             return;
         }

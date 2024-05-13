@@ -7,7 +7,10 @@ import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.exception.RemotingException;
+import zql.CallRope.core.config.Configuration;
 import zql.CallRope.point.model.Span;
+
+import static zql.CallRope.core.config.Configuration.getProperty;
 
 
 /**
@@ -16,13 +19,18 @@ import zql.CallRope.point.model.Span;
  * 消息的持久化存储
  */
 public class SpanProducer {
-    private static final String ROCKETMQ_TOPIC = "callrope-span";
+    private static final String ROCKETMQ_TOPIC;
     private static final DefaultMQProducer producer;
-    private static final String MQ_IP_PORT = "192.168.240.133:9876";
+    private static final String MQHostName;
+    private static final String MQPort;
 
     static {
+        ROCKETMQ_TOPIC = getProperty("mq_topic");
+        MQPort = getProperty("mq_port");
+        MQHostName = getProperty("mq_host_name");
+
         producer = new DefaultMQProducer("producerGroup");
-        producer.setNamesrvAddr(MQ_IP_PORT);
+        producer.setNamesrvAddr(MQHostName + ":" + MQPort);
         try {
             producer.start();
             producer.setCreateTopicKey(ROCKETMQ_TOPIC);
@@ -39,7 +47,6 @@ public class SpanProducer {
                     "span",
                     message.getBytes()
             );
-            System.out.println(message.getBytes());
             producer.send(msg);
         } catch (MQClientException e) {
             e.printStackTrace();

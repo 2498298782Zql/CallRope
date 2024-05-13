@@ -1,6 +1,0 @@
-com\ProvideApplication.class
-com\filter\producerFilter.class
-com\service\UserServiceImpl.class
-com\handler\producerHandler.class
-com\MockDataConstant.class
-com\handler\Myconfig.class

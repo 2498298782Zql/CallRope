@@ -2,19 +2,15 @@ package zql.CallRope.point;
 
 import zql.CallRope.point.model.Span;
 
-import java.util.HashSet;
 import java.util.Set;
+
+import static zql.CallRope.point.config.Configuration.getPropertyAsSet;
 
 public class Trace {
     public static final TransmittableThreadLocal<Span> spanTtl = new TransmittableThreadLocal<Span>();
-    public static final Set<String> threadPrefixSet = new HashSet<String>();
-    public static final String tomcatThreadNamePrefix = "http";
-    public static final String dubboThreadNamePrefix = "DubboServerHandler";
-
+    public static final Set<String> threadPrefixSet;
     static {
-        // 添加你要检查的前缀到集合中
-        threadPrefixSet.add(tomcatThreadNamePrefix);
-        threadPrefixSet.add(dubboThreadNamePrefix);
+        threadPrefixSet = getPropertyAsSet("threadpool-name-prefix");
     }
 
     public static final boolean isThreadNameWithPrefix() {

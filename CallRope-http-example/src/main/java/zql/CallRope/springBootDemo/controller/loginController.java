@@ -3,6 +3,8 @@ package zql.CallRope.springBootDemo.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import static zql.CallRope.springBootDemo.GlobalThreadPoolBuffer.GlabalThreadPoolUtils.shopPool;
 import static zql.CallRope.springBootDemo.GlobalThreadPoolBuffer.GlabalThreadPoolUtils.threadPoolExecutor;
 @RestController
 @RequestMapping("/login")
@@ -10,10 +12,10 @@ public class loginController {
 
     @GetMapping("/test/user/zql/114514")
     public String login(){
-        threadPoolExecutor.submit(new Runnable() {
+        shopPool.submit(new Runnable() {
             @Override
             public void run() {
-                System.out.println("我是异步任务！");
+                System.out.println("我是业务线程池");
             }
         });
         System.out.println(Thread.currentThread().getContextClassLoader() + "   {context}");

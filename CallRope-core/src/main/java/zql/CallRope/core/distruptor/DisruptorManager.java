@@ -4,6 +4,7 @@ import com.lmax.disruptor.BlockingWaitStrategy;
 import com.lmax.disruptor.EventFactory;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
+import zql.CallRope.core.config.Configuration;
 import zql.CallRope.core.distruptor.model.DataEvent;
 import com.lmax.disruptor.*;
 
@@ -12,8 +13,9 @@ public class DisruptorManager<T> {
     public static final Integer DEFAULT_SIZE = 4096 << 1 << 1;
     private DataEventListener<T> dataEventListener;
     private DisruptorProducer<T> producer;
-    private int ringBufferSize;
     private int consumerSize;
+    private int ringBufferSize;
+
 
     public DisruptorManager(DataEventListener<T> dataEventListener) {
         this(dataEventListener, DEFAULT_CONSUMER_SIZE, DEFAULT_SIZE);

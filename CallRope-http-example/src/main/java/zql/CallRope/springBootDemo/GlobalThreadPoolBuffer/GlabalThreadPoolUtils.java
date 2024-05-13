@@ -6,15 +6,16 @@ import com.alibaba.ttl.TtlRunnable;
 import java.util.concurrent.*;
 
 public class GlabalThreadPoolUtils {
-    public static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 20, 1l, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(10));
+    public static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 20, 1l, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(10), new NamedThreadFactory("zql-pool",false));
+    public static ThreadPoolExecutor shopPool = new ThreadPoolExecutor(5, 20, 1l, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(10), new NamedThreadFactory("shop-pool",false));
     public static TransmittableThreadLocal<Integer> threadLocal = new TransmittableThreadLocal<>();
-    public static ExecutorService executorService = Executors.newFixedThreadPool(1);
 
     public static void main(String[] args) throws InterruptedException {
-        System.out.println("主线程开启");
         threadLocal.set(1);
 
-        executorService.submit(TtlRunnable.get(() -> {
+        System.out.println(Thread.currentThread().getName());
+        threadPoolExecutor.submit(TtlRunnable.get(() -> {
+            System.out.println(Thread.currentThread().getName());
             System.out.println("子线程读取本地变量：" + threadLocal.get());
         }));
 
@@ -22,7 +23,7 @@ public class GlabalThreadPoolUtils {
 
         threadLocal.set(2);
 
-        executorService.submit(TtlRunnable.get(() -> {
+        threadPoolExecutor.submit(TtlRunnable.get(() -> {
             System.out.println("子线程读取本地变量：" + threadLocal.get());
         }));
     }

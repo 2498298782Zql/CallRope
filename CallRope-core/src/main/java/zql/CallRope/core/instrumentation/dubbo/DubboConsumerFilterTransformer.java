@@ -6,18 +6,17 @@ import javassist.CtMethod;
 import javassist.NotFoundException;
 import zql.CallRope.core.instrumentation.ClassInfo;
 import zql.CallRope.core.instrumentation.transformer;
-import zql.CallRope.point.model.Span;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
 
+import static zql.CallRope.core.config.Configuration.*;
+
 public class DubboConsumerFilterTransformer implements transformer {
-    private static final String TRACE_ID = "CallRopeTraceId";
-    private static Set<String> filterConsumerInvoke = new HashSet<String>();
+    private static Set<String> filterConsumerInvoke;
 
     static {
-        filterConsumerInvoke.add("zql.CallRope.springBootDemo.filter.dubboFilter");
+        filterConsumerInvoke = getPropertyAsSet("filter_comsumer_class");
     }
 
     @Override

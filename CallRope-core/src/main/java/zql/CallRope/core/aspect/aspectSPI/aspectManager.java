@@ -18,9 +18,7 @@ public class aspectManager {
         methodAspects = methodAspectsMap;
         frameworkAspects = frameworkAspectsMap;
         asyncThreadAspects = asyncThreadAspectsMap;
-        loadMethodAspectsServices();
-        loadFrameworkAspectsServices();
-        loadAsyncThreadAspects();
+        loadAllAspects();
     }
 
     private static void loadMethodAspectsServices() {
@@ -31,7 +29,7 @@ public class aspectManager {
     }
 
     private static void loadFrameworkAspectsServices() {
-        ServiceLoader<FrameworkAspect> loader = ServiceLoader.load(FrameworkAspect.class,FrameworkAspect.class.getClassLoader());
+        ServiceLoader<FrameworkAspect> loader = ServiceLoader.load(FrameworkAspect.class, FrameworkAspect.class.getClassLoader());
         for (FrameworkAspect impl : loader) {
             frameworkAspects.put(impl.getClass().getSimpleName(), impl);
         }
@@ -42,5 +40,11 @@ public class aspectManager {
         for (AsyncThreadAspect impl : loader) {
             asyncThreadAspects.put(impl.getClass().getSimpleName(), impl);
         }
+    }
+
+    private static void loadAllAspects() {
+        loadAsyncThreadAspects();
+        loadMethodAspectsServices();
+        loadFrameworkAspectsServices();
     }
 }

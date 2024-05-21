@@ -53,4 +53,12 @@ public class Metric {
             System.out.println("=============================================================");
         }
     }
+    public static void main(String[] args) {
+        // 打印内存信息
+        printMemoryInfo();
+
+        // 打印垃圾回收信息
+        printGCInfo();
+    }
+
 }

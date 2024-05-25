@@ -9,6 +9,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class TraceIdGenerator {
     private static final AtomicInteger atomicInteger = new AtomicInteger(1);
 
+    private static final TokenBucket tokenBucket;
+
+    static {
+        tokenBucket = new TokenBucket(10, 5);
+    }
     public static String generateTraceId() {
         // 获取当前时间的毫秒数
         long timestamp = System.currentTimeMillis();
@@ -61,5 +66,15 @@ public class TraceIdGenerator {
         return String.format("%04x", pid);
     }
 
+
+    /**
+     * 暂时不启用
+     */
+    public static String tryGenerateTraceId(){
+        if(tokenBucket.tryConsume()){
+            return generateTraceId();
+        }
+        return "-1";
+    }
 }
 

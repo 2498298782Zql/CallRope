@@ -34,14 +34,13 @@ public class DubboConsumerFilterTransformer implements transformer {
         }
         StringBuilder code = new StringBuilder();
         code.append("zql.CallRope.point.model.Span spanTrace = (zql.CallRope.point.model.Span)zql.CallRope.point.Trace.spanTtl.get();\n");
+        code.append("if(spanTrace != null){\n");
         code.append("String traceId = spanTrace.traceId;\n");
         code.append("String pSpanId = spanTrace.spanId;");
-        code.append("if(spanTrace == null){\n");
-        code.append("   traceId = zql.CallRope.point.IDutils.TraceIdGenerator.generateTraceId();\n");
-        code.append("}\n");
         code.append("com.alibaba.dubbo.rpc.RpcContext.getContext().setAttachment(\"rope-traceId\",traceId);\n");
         code.append("com.alibaba.dubbo.rpc.RpcContext.getContext().setAttachment(\"rope-pSpanId\",pSpanId);\n");
         code.append("com.alibaba.dubbo.rpc.RpcContext.getContext().setAttachment(\"rope-spanId\", String.valueOf(spanTrace.LevelSpanId()));\n");
+        code.append("}\n");
         invoke.insertBefore(code.toString());
         classInfo.flag = true;
         classInfo.setModified();

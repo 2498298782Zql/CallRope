@@ -41,6 +41,9 @@ public class SpanProducer {
 
     public static void sendSpanToRocketMq(Span span) {
         try {
+            if(span.traceId.equals("-1")){
+                return;
+            }
             String message = JSONObject.toJSONString(span);
             Message msg = new Message(
                     ROCKETMQ_TOPIC,

@@ -29,32 +29,45 @@ public class TtlRunnable implements Runnable, TtlEnhanced {
             runnable.run();
             return;
         }
+
         Object captured = capturedRef.get();
+
         if (captured == null && releaseTtlValueReferenceAfterRun && !capturedRef.compareAndSet(captured, null)) {
             throw new IllegalStateException("TTL value reference is released after run!");
         }
+
         Object backup = replay(captured);
+
+
         try {
+
+
             Span oldSpan = (Span) Trace.spanTtl.get();
+
             // 真正的Runnable调用
             if (oldSpan != null) {
                 Span span = new SpanBuilder(oldSpan.traceId, oldSpan.spanId + "." + oldSpan.LevelSpanId(), oldSpan.spanId, oldSpan.serviceName, oldSpan.methodName).withIsAsyncThread(true).build();
                 Trace.spanTtl.set(span);
                 SpyAPI.atFrameworkEnter(span, null, new String[]{"SpringFrameworkAspectImpl"});
             }
+
             runnable.run();
+
             oldSpan = Trace.spanTtl.get();
             if ( oldSpan != null) {
                 SpyAPI.atFrameworkExit(oldSpan, null, new String[]{"SpringFrameworkAspectImpl"});
             }
         } finally {
+
             restore(backup);
+
         }
     }
 
     public static TtlRunnable get(Runnable runnable) {
         return create(runnable, false);
     }
+
 
     public static TtlRunnable create(Runnable runnable, boolean releaseTtlValueReferenceAfterRun) {
         if (null == runnable) return null;
@@ -63,5 +76,6 @@ public class TtlRunnable implements Runnable, TtlEnhanced {
         }
         return new TtlRunnable(runnable, releaseTtlValueReferenceAfterRun);
     }
+
 
 }

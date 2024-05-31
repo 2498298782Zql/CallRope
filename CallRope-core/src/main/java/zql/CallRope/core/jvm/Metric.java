@@ -25,11 +25,8 @@ public class Metric {
                 headMemory.getUsed() * 100 / headMemory.getCommitted() + "%"
 
         );
-
         System.out.print(info);
-
         MemoryUsage nonheadMemory = memory.getNonHeapMemoryUsage();
-
         info = String.format("init: %s\t max: %s\t used: %s\t committed: %s\t use rate: %s\n",
                 nonheadMemory.getInit() / MB + "MB",
                 nonheadMemory.getMax() / MB + "MB", nonheadMemory.getUsed() / MB + "MB",
@@ -53,10 +50,10 @@ public class Metric {
             System.out.println("=============================================================");
         }
     }
+
     public static void main(String[] args) {
         // 打印内存信息
         printMemoryInfo();
-
         // 打印垃圾回收信息
         printGCInfo();
     }

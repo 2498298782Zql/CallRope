@@ -27,7 +27,7 @@ public class SpringBootHandlerInteceptorTransformer implements transformer {
             code.append("javax.servlet.http.HttpServletRequest requestDuplicate = $1;\n");
             code.append("String traceId = requestDuplicate.getHeader(\"TraceId\");\n");
             code.append("if (traceId == null || traceId.isEmpty()) {\n");
-            code.append("    traceId = zql.CallRope.point.IDutils.TraceIdGenerator.generateTraceId();\n");
+            code.append("    traceId = zql.CallRope.point.IDutils.TraceIdGenerator.tryGenerateTraceId();\n");
             code.append("    requestDuplicate.setAttribute(\"CallRope-TraceId\", traceId);\n");
             code.append("}\n");
             code.append("}\n");

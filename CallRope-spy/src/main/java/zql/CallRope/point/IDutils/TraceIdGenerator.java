@@ -14,6 +14,8 @@ public class TraceIdGenerator {
     static {
         tokenBucket = new TokenBucket(10, 5);
     }
+
+
     public static String generateTraceId() {
         // 获取当前时间的毫秒数
         long timestamp = System.currentTimeMillis();

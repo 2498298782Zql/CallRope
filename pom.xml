@@ -16,6 +16,7 @@
         <module>CallRope-http-example</module>
         <module>CallRope-dubbo-producer-example</module>
         <module>CallRope-dubbo-facafe-api-example</module>
+        <module>rope-gantt</module>
     </modules>
 
     <properties>

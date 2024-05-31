@@ -16,7 +16,7 @@ public class Span implements Serializable{
     public long end;
     public long duration; // end - start
     public Map<String, Object> logInfos;
-    public Boolean isAsyncThread;
+    public Boolean isAsyncThread; // 是否是线程池的方法
 
     private Span() {
     }

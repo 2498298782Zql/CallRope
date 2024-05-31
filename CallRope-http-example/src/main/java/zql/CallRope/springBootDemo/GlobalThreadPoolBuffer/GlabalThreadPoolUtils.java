@@ -12,17 +12,13 @@ public class GlabalThreadPoolUtils {
 
     public static void main(String[] args) throws InterruptedException {
         threadLocal.set(1);
-
         System.out.println(Thread.currentThread().getName());
         threadPoolExecutor.submit(TtlRunnable.get(() -> {
             System.out.println(Thread.currentThread().getName());
             System.out.println("子线程读取本地变量：" + threadLocal.get());
         }));
-
         TimeUnit.SECONDS.sleep(1);
-
         threadLocal.set(2);
-
         threadPoolExecutor.submit(TtlRunnable.get(() -> {
             System.out.println("子线程读取本地变量：" + threadLocal.get());
         }));

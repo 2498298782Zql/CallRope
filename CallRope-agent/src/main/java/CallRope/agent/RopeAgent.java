@@ -48,6 +48,7 @@ public class RopeAgent {
             }
             // 使用自定义加载器加载 CALLROPE_CORE_JAR,防止污染线上的代码
             instrumentation.appendToBootstrapClassLoaderSearch(new JarFile(agentSpyFile));
+
             File agentCoreFile = new File(CALLROPE_CORE_JAR);
             if (!agentCoreFile.exists()) {
                 return;
@@ -56,6 +57,7 @@ public class RopeAgent {
             Class<?> CallRopeClassFileTransform = callRopeClassLoader.loadClass(TRANSFORMER);
             Constructor<?> transform = CallRopeClassFileTransform.getDeclaredConstructor(String.class);
             instrumentation.addTransformer((ClassFileTransformer) transform.newInstance(CALLROPE_SPY_JAR), true);
+
             Class[] allLoadedClasses = instrumentation.getAllLoadedClasses();
             Class<?> threadPoolExecutorClass = null;
             for (Class<?> clazz : allLoadedClasses) {
@@ -68,4 +70,5 @@ public class RopeAgent {
             throwable.printStackTrace();
         }
     }
+
 }

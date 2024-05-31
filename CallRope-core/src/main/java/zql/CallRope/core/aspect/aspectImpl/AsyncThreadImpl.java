@@ -33,6 +33,8 @@ public class AsyncThreadImpl implements AsyncThreadAspect {
             span.logInfos.put(entry.getKey(), entry.getValue());
         }
         producer.onData(span);
+        System.out.println(span);
         Trace.spanTtl.remove();
     }
+
 }

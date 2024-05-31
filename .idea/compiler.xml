@@ -22,6 +22,7 @@
       <module name="consumer-example" target="8" />
       <module name="example-dubbo" target="8" />
       <module name="producer-example" target="8" />
+      <module name="rope-gantt" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

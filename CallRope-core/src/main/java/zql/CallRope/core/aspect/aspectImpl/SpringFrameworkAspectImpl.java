@@ -29,6 +29,7 @@ public class SpringFrameworkAspectImpl implements FrameworkAspect {
         span.end = System.currentTimeMillis();
         span.duration = span.end - span.start;
         producer.onData(span);
+        System.out.println(span);
         Trace.spanTtl.remove();
         return span;
     }

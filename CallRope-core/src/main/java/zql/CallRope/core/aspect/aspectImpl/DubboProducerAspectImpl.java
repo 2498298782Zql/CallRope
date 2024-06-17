@@ -4,7 +4,7 @@ import org.apache.kafka.common.utils.Sanitizer;
 import zql.CallRope.core.aspect.FrameworkAspect;
 import zql.CallRope.core.distruptor.DisruptorConfig;
 import zql.CallRope.core.distruptor.DisruptorProducer;
-import zql.CallRope.point.Trace;
+import zql.CallRope.point.TraceInfos;
 import zql.CallRope.point.model.Span;
 import zql.CallRope.point.model.SpanBuilder;
 import zql.CallRope.point.model.SpanEnvironment;
@@ -20,7 +20,7 @@ public class DubboProducerAspectImpl implements FrameworkAspect {
         span.start = System.currentTimeMillis();
         span.setEnv(SpanEnvironment.TEST_ENVIRONMENT);
         SpanBuilder.fix(span);
-        Trace.spanTtl.set(span);
+        TraceInfos.spanTtl.set(span);
         return null;
     }
 
@@ -29,7 +29,7 @@ public class DubboProducerAspectImpl implements FrameworkAspect {
         span.end = System.currentTimeMillis();
         span.duration = span.end - span.start;
         producer.onData(span);
-        Trace.spanTtl.remove();
+        TraceInfos.spanTtl.remove();
         return null;
     }
 }

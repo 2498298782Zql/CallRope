@@ -6,17 +6,20 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Span implements Serializable{
     private final transient AtomicInteger nextId = new AtomicInteger(1);// 用于同一层级的spanId自增
+
     public String traceId;
     public String spanId;
     public String pspanId;
     public String serviceName;  // appName
+
     public String methodName;
     public SpanEnvironment env;
+
     public long start;
     public long end;
     public long duration; // end - start
     public Map<String, Object> logInfos;
-    public Boolean isAsyncThread;
+    public Boolean isAsyncThread; // 标志是否时线程池
 
     private Span() {
     }
@@ -24,8 +27,6 @@ public class Span implements Serializable{
     public Integer LevelSpanId(){
         return nextId.getAndIncrement();
     }
-
-
 
     protected Span(String traceId, String spanId, String pspanId, String serviceName, String methodName,
                    SpanEnvironment env, long start, long end, long duration, Map<String, Object> logInfos) {

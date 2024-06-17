@@ -1,7 +1,7 @@
 package zql.CallRope.demo;
 
-import zql.CallRope.point.TransmittableThreadLocal;
-import zql.CallRope.point.TtlRunnable;
+import zql.CallRope.point.threadpool.TransmittableThreadLocal;
+import zql.CallRope.point.threadpool.TtlRunnable;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 

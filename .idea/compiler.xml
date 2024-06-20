@@ -17,6 +17,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="CallRope-core" target="8" />
       <module name="CallRope-dubbo-consumer-example" target="8" />
       <module name="CallRope-dubbo-example" target="8" />
       <module name="consumer-example" target="8" />

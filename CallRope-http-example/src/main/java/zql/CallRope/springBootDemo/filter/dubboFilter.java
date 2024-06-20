@@ -10,7 +10,7 @@ import static com.alibaba.dubbo.common.Constants.CONSUMER;
 public class dubboFilter implements Filter {
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-        zql.CallRope.point.model.Span spanTrace = (zql.CallRope.point.model.Span)zql.CallRope.point.Trace.spanTtl.get();
+        zql.CallRope.point.model.Span spanTrace = zql.CallRope.point.TraceInfos.spanTtl.get();
         System.out.println(spanTrace);
         return invoker.invoke(invocation);
     }

@@ -13,8 +13,8 @@ public class JdkExecutorTtlTransformlet implements transformer {
     protected static final String RUNNABLE_CLASS_NAME = "java.lang.Runnable";
     protected static final String CALLABLE_CLASS_NAME = "java.util.concurrent.Callable";
 
-    protected static final String TTL_RUNNABLE_CLASS_NAME = "zql.CallRope.point.TtlRunnable";
-    protected static final String TTL_CALLABLE_CLASS_NAME = "zql.CallRope.point.TtlCallable";
+    protected static final String TTL_RUNNABLE_CLASS_NAME = "zql.CallRope.point.threadpool.TtlRunnable";
+    protected static final String TTL_CALLABLE_CLASS_NAME = "zql.CallRope.point.threadpool.TtlCallable";
 
     protected final boolean disableInheritableForThreadPool = false; // 是否需要基于线程池的跨线程传递
 
@@ -59,7 +59,7 @@ public class JdkExecutorTtlTransformlet implements transformer {
             final String paramTypeName = parameterTypes[i].getName();
             if (paramTypeNameToDecorateMethodClass.containsKey(paramTypeName)) {
                 String code = String.format(
-                        "$%d = zql.CallRope.point.AutoWrap.doAutoWrap($%<d);",
+                        "$%d = zql.CallRope.point.threadpool.AutoWrap.doAutoWrap($%<d);",
                         i + 1);
                 insertCode.append(code);
             }

@@ -10,7 +10,6 @@ public class SpyAPI {
     private static volatile SpySPI spyInstance = doNothingSpy;
     private static volatile boolean inited = false;
 
-
     public static void setSpy(SpySPI spy) {
         spyInstance = spy;
         inited = true;

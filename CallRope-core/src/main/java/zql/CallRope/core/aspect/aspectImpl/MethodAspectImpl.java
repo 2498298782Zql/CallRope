@@ -4,6 +4,9 @@ import zql.CallRope.core.aspect.MethodAspect;
 import java.util.Map;
 
 
+/**
+ * 加强普通方法
+ */
 public class MethodAspectImpl implements MethodAspect {
     @Override
     public void before(Class<?> clazz, String methodName, String methodDesc, Object target, Map<String,Object> infos) throws Throwable {

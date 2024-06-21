@@ -44,7 +44,7 @@ public class DubboProducerFilterTransformer implements transformer {
         codeBefore.append("}\n");
 
         StringBuilder codeAfter = new StringBuilder();
-        codeAfter.append("zql.CallRope.point.model.Span spanDupilicate = (zql.CallRope.point.model.Span)zql.CallRope.point.Trace.spanTtl.get();\n");
+        codeAfter.append("zql.CallRope.point.model.Span spanDupilicate = (zql.CallRope.point.model.Span)zql.CallRope.point.TraceInfos.spanTtl.get();\n");
         codeAfter.append("zql.CallRope.point.SpyAPI.atFrameworkExit(spanDupilicate, null, new String[]{\"DubboProducerAspectImpl\"});\n");
         invoke.insertBefore(codeBefore.toString());
         invoke.insertAfter(codeAfter.toString());

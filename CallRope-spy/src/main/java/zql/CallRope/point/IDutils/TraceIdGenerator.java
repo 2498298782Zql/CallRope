@@ -9,10 +9,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class TraceIdGenerator {
     private static final AtomicInteger atomicInteger = new AtomicInteger(1);
 
-    private static final TokenBucket tokenBucket;
+    private static final ShardedTokenBucket tokenBucket;
 
     static {
-        tokenBucket = new TokenBucket(10, 5);
+        tokenBucket = new ShardedTokenBucket(5, 100,5);
     }
     public static String generateTraceId() {
         // 获取当前时间的毫秒数
@@ -67,14 +67,12 @@ public class TraceIdGenerator {
     }
 
 
-    /**
-     * 暂时不启用
-     */
     public static String tryGenerateTraceId(){
-        if(tokenBucket.tryConsume()){
+        if(tokenBucket.tryConsume(1)) {
             return generateTraceId();
         }
         return "-1";
     }
+
 }
 

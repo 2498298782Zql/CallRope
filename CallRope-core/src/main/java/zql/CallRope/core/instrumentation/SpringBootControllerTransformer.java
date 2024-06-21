@@ -51,13 +51,13 @@ public class SpringBootControllerTransformer implements transformer {
                     codeBefore.append("String spanId = (String)requestDuplicate.getAttribute(\"CallRope-spanId\");\n");
                     codeBefore.append(String.format("zql.CallRope.point.model.Span span = new zql.CallRope.point.model.SpanBuilder(traceId,spanId,pSpanId,\"%s\",\"%s\").build();\n", serviceName, methodName).toString());
                     codeBefore.append("zql.CallRope.point.SpyAPI.atFrameworkEnter(span, null, new String[]{\"SpringFrameworkAspectImpl\"});\n");
-                    codeBefore.append("zql.CallRope.point.Trace.spanTtl.set(span);");
+                    codeBefore.append("zql.CallRope.point.TraceInfos.spanTtl.set(span);");
                     codeBefore.append("\n");
                     ctMethod.insertBefore(String.valueOf(codeBefore));
 
                     StringBuilder codeAfter = new StringBuilder();
                     codeAfter.append("\n");
-                    codeAfter.append("zql.CallRope.point.model.Span spanDupilicate = (zql.CallRope.point.model.Span)zql.CallRope.point.Trace.spanTtl.get();\n");
+                    codeAfter.append("zql.CallRope.point.model.Span spanDupilicate = (zql.CallRope.point.model.Span)zql.CallRope.point.TraceInfos.spanTtl.get();\n");
                     codeAfter.append("zql.CallRope.point.SpyAPI.atFrameworkExit(spanDupilicate, null, new String[]{\"SpringFrameworkAspectImpl\"});");
                     codeAfter.append("\n");
                     ctMethod.insertAfter(String.valueOf(codeAfter));

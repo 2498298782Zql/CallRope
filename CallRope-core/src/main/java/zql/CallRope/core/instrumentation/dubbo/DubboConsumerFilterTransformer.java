@@ -33,7 +33,7 @@ public class DubboConsumerFilterTransformer implements transformer {
             throw new ClassNotFoundException(classInfo.getClassName() + ":缺少invoke方法");
         }
         StringBuilder code = new StringBuilder();
-        code.append("zql.CallRope.point.model.Span spanTrace = (zql.CallRope.point.model.Span)zql.CallRope.point.Trace.spanTtl.get();\n");
+        code.append("zql.CallRope.point.model.Span spanTrace = (zql.CallRope.point.model.Span)zql.CallRope.point.TraceInfos.spanTtl.get();\n");
         code.append("if(spanTrace != null){\n");
         code.append("String traceId = spanTrace.traceId;\n");
         code.append("String pSpanId = spanTrace.spanId;");

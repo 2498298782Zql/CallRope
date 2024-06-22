@@ -3,7 +3,6 @@ package zql.CallRope.point;
 import zql.CallRope.point.model.Span;
 
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 public class SpyAPI {
     public static final SpySPI doNothingSpy = new DoNothingSpy();
@@ -56,39 +55,5 @@ public class SpyAPI {
 
     public static void atFrameThreadPoolExit(Span span, String[] enhanceCLassnames) {
         spyInstance.atFrameThreadPoolExit(span, enhanceCLassnames);
-    }
-
-    private static class DoNothingSpy implements SpySPI {
-        @Override
-        public void atEnter(Class<?> clazz, String methodInfo, Object target, Map<String, Object> infos) {
-        }
-
-        @Override
-        public void atExit(Class<?> clazz, String methodInfo, Object target, Object returnObject, Map<String, Object> infos) {
-        }
-
-        @Override
-        public void atExceptionExit(Class<?> clazz, String methodInfo, Object target, Map<String, Object> infos, Throwable throwable) {
-        }
-
-        @Override
-        public void atFrameworkEnter(Span span, Map<String, Object> infos, String[] enhanceCLassnames) {
-
-        }
-
-        @Override
-        public void atFrameworkExit(Span span, Map<String, Object> infos, String[] enhanceCLassnames) {
-
-        }
-
-        @Override
-        public void atFrameThreadPoolEnter(Span span, String[] enhanceCLassnames) {
-
-        }
-
-        @Override
-        public void atFrameThreadPoolExit(Span span, String[] enhanceCLassnames) {
-
-        }
     }
 }

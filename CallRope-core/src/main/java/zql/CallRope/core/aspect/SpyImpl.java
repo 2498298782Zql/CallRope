@@ -1,5 +1,6 @@
 package zql.CallRope.core.aspect;
 import zql.CallRope.core.aspect.aspectSPI.aspectManager;
+import zql.CallRope.core.config.FileWatchService;
 import zql.CallRope.point.SpyAPI;
 import zql.CallRope.point.SpySPI;
 import zql.CallRope.point.model.Span;
@@ -23,6 +24,13 @@ public class SpyImpl implements SpySPI {
         asyncThreadAspects = createAsyncThreadAspectsMap(asyncThreadAspects);
         aspectManager.init(methodAspects,frameworkAspects, asyncThreadAspects);
         SpyAPI.setSpy(new SpyImpl());
+        try {
+            // 开启调用链开关监视
+            FileWatchService fileWatchService = new FileWatchService(new String[]{"CallRope-core/src/main/resources/rope-swtich.properties"});
+            fileWatchService.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static Map<String, MethodAspect> createMethodAspectsMap(Map<String, MethodAspect> map) {

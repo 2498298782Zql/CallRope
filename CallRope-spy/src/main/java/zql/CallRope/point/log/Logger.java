@@ -1,6 +1,6 @@
 package zql.CallRope.point.log;
 
-public interface Logger {
+public interface Logger{
     void trace(String msg);
 
     void info(String msg);

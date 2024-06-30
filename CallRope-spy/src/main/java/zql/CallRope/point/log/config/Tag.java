@@ -9,6 +9,7 @@ import java.util.Map;
 public class Tag {
     public static final String APPENDER_TAG = "appender";
 
+    // logger标签，name属性的作用是作用范围
     public static final String LOGGER_TAG = "logger";
 
     public static final String CLASS_ATTR = "class";

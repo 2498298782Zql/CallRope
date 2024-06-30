@@ -22,4 +22,8 @@ public class FilterLevel implements Filter{
     public void start() {
         this.level = Level.parse(levelStr);
     }
+
+
+    @Override
+    public void stop() {}
 }

@@ -1,6 +1,8 @@
 package zql.CallRope.point.log.config;
 
 
-public interface Configurator{
+import zql.CallRope.point.log.LifeCycle;
+
+public interface Configurator extends LifeCycle {
     void doConfigure();
 }

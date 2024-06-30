@@ -16,4 +16,14 @@ public class ConsoleAppender extends AppenderBase {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void stop() {
+
+    }
 }

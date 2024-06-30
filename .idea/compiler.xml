@@ -3,22 +3,108 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Maven default annotation processors profile" enabled="true">
+      <profile name="Annotation profile for CallRope-CSPI" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/CallRope-CSPI/target/classes" />
+          <entry name="$PROJECT_DIR$/../../../../../Program Files/Java/jdk1.8.0_351/lib/tools.jar" />
+        </processorPath>
+        <module name="CallRope-CSPI" />
+      </profile>
+      <profile name="Annotation profile for CallRope" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/CallRope-core/target/classes" />
+          <entry name="$PROJECT_DIR$/CallRope-spy/target/classes" />
+          <entry name="$PROJECT_DIR$/CallRope-CSPI/target/classes" />
+          <entry name="$MAVEN_REPOSITORY$/com/lmax/disruptor/3.3.6/disruptor-3.3.6.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/kafka/kafka-clients/3.4.0/kafka-clients-3.4.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/com/github/luben/zstd-jni/1.5.2-1/zstd-jni-1.5.2-1.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/lz4/lz4-java/1.8.0/lz4-java-1.8.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/xerial/snappy/snappy-java/1.1.8.4/snappy-java-1.1.8.4.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/javassist/javassist/3.27.0-GA/javassist-3.27.0-GA.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/rocketmq/rocketmq-client/4.9.1/rocketmq-client-4.9.1.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/rocketmq/rocketmq-common/4.9.1/rocketmq-common-4.9.1.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/rocketmq/rocketmq-remoting/4.9.1/rocketmq-remoting-4.9.1.jar" />
+          <entry name="$MAVEN_REPOSITORY$/io/netty/netty-all/4.1.65.Final/netty-all-4.1.65.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/rocketmq/rocketmq-logging/4.9.1/rocketmq-logging-4.9.1.jar" />
+          <entry name="$MAVEN_REPOSITORY$/commons-validator/commons-validator/1.7/commons-validator-1.7.jar" />
+          <entry name="$MAVEN_REPOSITORY$/commons-beanutils/commons-beanutils/1.9.4/commons-beanutils-1.9.4.jar" />
+          <entry name="$MAVEN_REPOSITORY$/commons-digester/commons-digester/2.1/commons-digester-2.1.jar" />
+          <entry name="$MAVEN_REPOSITORY$/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.jar" />
+          <entry name="$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.9/commons-codec-1.9.jar" />
+          <entry name="$MAVEN_REPOSITORY$/com/alibaba/fastjson/1.2.47/fastjson-1.2.47.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch/8.13.3/elasticsearch-8.13.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch-core/8.13.3/elasticsearch-core-8.13.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch-logging/8.13.3/elasticsearch-logging-8.13.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch-secure-sm/8.13.3/elasticsearch-secure-sm-8.13.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch-x-content/8.13.3/elasticsearch-x-content-8.13.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch-geo/8.13.3/elasticsearch-geo-8.13.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch-lz4/8.13.3/elasticsearch-lz4-8.13.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/elasticsearch/plugin/elasticsearch-plugin-api/8.13.3/elasticsearch-plugin-api-8.13.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/elasticsearch/plugin/elasticsearch-plugin-analysis-api/8.13.3/elasticsearch-plugin-analysis-api-8.13.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch-grok/8.13.3/elasticsearch-grok-8.13.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/jruby/joni/joni/2.1.29/joni-2.1.29.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/jruby/jcodings/jcodings/1.0.44/jcodings-1.0.44.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch-tdigest/8.13.3/elasticsearch-tdigest-8.13.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/lucene/lucene-core/9.10.0/lucene-core-9.10.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/lucene/lucene-analysis-common/9.10.0/lucene-analysis-common-9.10.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/lucene/lucene-backward-codecs/9.10.0/lucene-backward-codecs-9.10.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/lucene/lucene-grouping/9.10.0/lucene-grouping-9.10.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/lucene/lucene-highlighter/9.10.0/lucene-highlighter-9.10.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/lucene/lucene-join/9.10.0/lucene-join-9.10.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/lucene/lucene-memory/9.10.0/lucene-memory-9.10.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/lucene/lucene-misc/9.10.0/lucene-misc-9.10.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/lucene/lucene-queries/9.10.0/lucene-queries-9.10.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/lucene/lucene-queryparser/9.10.0/lucene-queryparser-9.10.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/lucene/lucene-sandbox/9.10.0/lucene-sandbox-9.10.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/lucene/lucene-suggest/9.10.0/lucene-suggest-9.10.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch-cli/8.13.3/elasticsearch-cli-8.13.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/net/sf/jopt-simple/jopt-simple/5.0.2/jopt-simple-5.0.2.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/hdrhistogram/HdrHistogram/2.1.9/HdrHistogram-2.1.9.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/logging/log4j/log4j-api/2.19.0/log4j-api-2.19.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/logging/log4j/log4j-core/2.19.0/log4j-core-2.19.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/net/java/dev/jna/jna/5.10.0/jna-5.10.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/co/elastic/logging/log4j2-ecs-layout/1.2.0/log4j2-ecs-layout-1.2.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/co/elastic/logging/ecs-logging-core/1.2.0/ecs-logging-core-1.2.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch-plugin-classloader/8.13.3/elasticsearch-plugin-classloader-8.13.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/com/carrotsearch/hppc/0.8.1/hppc-0.8.1.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch-native/8.13.3/elasticsearch-native-8.13.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch-preallocate/8.13.3/elasticsearch-preallocate-8.13.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/elasticsearch/client/elasticsearch-rest-client/8.13.3/elasticsearch-rest-client-8.13.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpclient/4.5.14/httpclient-4.5.14.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore/4.4.13/httpcore-4.4.13.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpasyncclient/4.1.5/httpasyncclient-4.1.5.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore-nio/4.4.13/httpcore-nio-4.4.13.jar" />
+          <entry name="$MAVEN_REPOSITORY$/commons-logging/commons-logging/1.2/commons-logging-1.2.jar" />
+          <entry name="$MAVEN_REPOSITORY$/co/elastic/clients/elasticsearch-java/8.1.0/elasticsearch-java-8.1.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar" />
+          <entry name="$MAVEN_REPOSITORY$/jakarta/json/jakarta.json-api/2.0.1/jakarta.json-api-2.0.1.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/eclipse/parsson/parsson/1.0.0/parsson-1.0.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.9.5/jackson-databind-2.9.5.jar" />
+          <entry name="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.9.0/jackson-annotations-2.9.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.9.5/jackson-core-2.9.5.jar" />
+        </processorPath>
         <module name="CallRope-agent" />
         <module name="CallRope-http-example" />
-        <module name="CallRope-spy" />
         <module name="CallRope-core" />
+        <module name="CallRope-spy" />
         <module name="CallRope-dubbo-facafe-api-example" />
         <module name="CallRope-example" />
         <module name="CallRope-dubbo-producer-example" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Call" target="1.8" />
       <module name="CallRope-dubbo-consumer-example" target="8" />
       <module name="CallRope-dubbo-example" target="8" />
+      <module name="CallRope-SPI" target="1.8" />
       <module name="consumer-example" target="8" />
       <module name="example-dubbo" target="8" />
       <module name="producer-example" target="8" />

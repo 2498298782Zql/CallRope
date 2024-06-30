@@ -1,16 +1,14 @@
 package zql.CallRope.point.log;
 
-import zql.CallRope.point.log.appender.Appender;
+import zql.CallRope.point.log.appender.AppenderAttachableImpl;
 import zql.CallRope.point.log.appender.Level;
 
-public class Logc implements Logger{
+public class Logc implements Logger, LifeCycle{
     private String name;
-    private Appender appender;
+    private AppenderAttachableImpl aai;
     private Level level = Level.TRACE;
     private int effectiveLevelInt;
-
     private Logc parent;
-
     private LoggerContext loggerContext;
 
     @Override
@@ -46,11 +44,11 @@ public class Logc implements Logger{
     private void filterAndLog(Level level,String msg){
         LoggingEvent e = new LoggingEvent(level, msg, name);
         for(Logc curLog = this; curLog != null; curLog = curLog.parent){
-            if( curLog != null){
+            if( curLog.aai == null){
                 continue;
             }
             if(level.toInt() > effectiveLevelInt){
-                curLog.appender.append(e);
+                curLog.aai.appendLoopOnAppenders(e);
             }
         }
     }
@@ -59,12 +57,20 @@ public class Logc implements Logger{
         this.name = name;
     }
 
-    public Appender getAppender() {
-        return appender;
+    public AppenderAttachableImpl getAai() {
+        return aai;
     }
 
-    public void setAppender(Appender appender) {
-        this.appender = appender;
+    public void setAai(AppenderAttachableImpl aai) {
+        this.aai = aai;
+    }
+
+    public int getEffectiveLevelInt() {
+        return effectiveLevelInt;
+    }
+
+    public void setEffectiveLevelInt(int effectiveLevelInt) {
+        this.effectiveLevelInt = effectiveLevelInt;
     }
 
     public Level getLevel() {
@@ -94,5 +100,15 @@ public class Logc implements Logger{
 
     public void setParent(Logger parent) {
         this.parent = (Logc) parent;
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void stop() {
+
     }
 }

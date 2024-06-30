@@ -1,9 +1,10 @@
 package zql.CallRope.core.aspect;
 
 import zql.CallRope.point.model.Span;
+import zql.CallRope.spi.annotation.SPI;
 
 import java.util.Map;
-
+@SPI
 public interface FrameworkAspect {
     /**
      * 调用链路入口监听

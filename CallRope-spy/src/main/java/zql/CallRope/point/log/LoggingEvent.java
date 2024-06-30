@@ -19,6 +19,14 @@ public class LoggingEvent {
         this.loggerName = loggerName;
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
     public Level getLevel() {
         return level;
     }

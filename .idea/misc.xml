@@ -13,6 +13,8 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/Call/pom.xml" />
+        <option value="$PROJECT_DIR$/CallRope-SPI/pom.xml" />
         <option value="$PROJECT_DIR$/CallRope-dubbo-consumer-example/pom.xml" />
         <option value="$PROJECT_DIR$/CallRope-dubbo-example/consumer-example/pom.xml" />
         <option value="$PROJECT_DIR$/CallRope-dubbo-example/pom.xml" />

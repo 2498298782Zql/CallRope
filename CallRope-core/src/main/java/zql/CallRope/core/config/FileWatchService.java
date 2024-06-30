@@ -20,11 +20,12 @@ import java.util.Properties;
 
 // 观察者模式
 public class FileWatchService implements Runnable {
+    // 支持监视多个文件
     private final List<String> watchFiles;
     private final List<String> filesCurrentHash;
     private final Listener listener;
     private static final int WATCH_INTEVAL = 500;
-    private MessageDigest md = MessageDigest.getInstance("MD5");
+    private MessageDigest md = MessageDigest.getInstance("SHA-256");
     private volatile boolean stopped = false;
     private final ScheduledExecutorService executorService;
 

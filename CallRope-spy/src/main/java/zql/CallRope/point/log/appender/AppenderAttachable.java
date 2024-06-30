@@ -1,5 +1,8 @@
 package zql.CallRope.point.log.appender;
 
+/**
+ * appender 输出器管理工具
+ */
 public interface AppenderAttachable {
     void addAppender(Appender newAppender);
 

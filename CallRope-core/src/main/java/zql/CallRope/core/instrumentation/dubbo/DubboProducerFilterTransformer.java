@@ -6,12 +6,14 @@ import javassist.CtMethod;
 import javassist.NotFoundException;
 import zql.CallRope.core.instrumentation.ClassInfo;
 import zql.CallRope.core.instrumentation.transformer;
+import zql.CallRope.spi.annotation.SPIAuto;
 
 import java.io.IOException;
 import java.util.Set;
 
 import static zql.CallRope.core.config.Configuration.getPropertyAsSet;
 
+@SPIAuto
 public class DubboProducerFilterTransformer implements transformer {
     private static Set<String> filterProviderInvoke;
 

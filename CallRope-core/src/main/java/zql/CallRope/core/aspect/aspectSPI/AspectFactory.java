@@ -3,14 +3,14 @@ package zql.CallRope.core.aspect.aspectSPI;
 import zql.CallRope.core.aspect.AsyncThreadAspect;
 import zql.CallRope.core.aspect.FrameworkAspect;
 import zql.CallRope.core.aspect.MethodAspect;
-import zql.CallRope.spi.SpiBs;
-import zql.CallRope.spi.api.IExtensionLoader;
 
-import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 
-public class aspectManager {
+/**
+ * 已废弃
+ */
+public class AspectFactory {
     private static Map<String, MethodAspect> methodAspects;
 
     private static Map<String, FrameworkAspect> frameworkAspects;
@@ -23,27 +23,23 @@ public class aspectManager {
         asyncThreadAspects = asyncThreadAspectsMap;
         loadAllAspects();
     }
-
     private static void loadMethodAspectsServices() {
-        IExtensionLoader<MethodAspect> load = SpiBs.load(MethodAspect.class, MethodAspect.class.getClassLoader());
-        List<MethodAspect> allExtension = load.getAllExtension();
-        for (MethodAspect impl : allExtension) {
+        ServiceLoader<MethodAspect> loader = ServiceLoader.load(MethodAspect.class, MethodAspect.class.getClassLoader());
+        for (MethodAspect impl : loader) {
             methodAspects.put(impl.getClass().getSimpleName(), impl);
         }
     }
 
     private static void loadFrameworkAspectsServices() {
-        IExtensionLoader<FrameworkAspect> load = SpiBs.load(FrameworkAspect.class, FrameworkAspect.class.getClassLoader());
-        List<FrameworkAspect> allExtension = load.getAllExtension();
-        for (FrameworkAspect impl : allExtension) {
+        ServiceLoader<FrameworkAspect> loader = ServiceLoader.load(FrameworkAspect.class, FrameworkAspect.class.getClassLoader());
+        for (FrameworkAspect impl : loader) {
             frameworkAspects.put(impl.getClass().getSimpleName(), impl);
         }
     }
 
     private static void loadAsyncThreadAspects() {
-        IExtensionLoader<AsyncThreadAspect> load = SpiBs.load(AsyncThreadAspect.class, AsyncThreadAspect.class.getClassLoader());
-        List<AsyncThreadAspect> allExtension = load.getAllExtension();
-        for (AsyncThreadAspect impl : allExtension) {
+        ServiceLoader<AsyncThreadAspect> loader = ServiceLoader.load(AsyncThreadAspect.class, AsyncThreadAspect.class.getClassLoader());
+        for (AsyncThreadAspect impl : loader) {
             asyncThreadAspects.put(impl.getClass().getSimpleName(), impl);
         }
     }

@@ -1,4 +1,5 @@
 package zql.CallRope.core.aspect;
+import zql.CallRope.core.aspect.aspectImpl.SpringFrameworkAspectImpl;
 import zql.CallRope.core.aspect.aspectSPI.aspectManager;
 import zql.CallRope.core.config.FileWatchService;
 import zql.CallRope.point.SpyAPI;
@@ -6,6 +7,7 @@ import zql.CallRope.point.SpySPI;
 import zql.CallRope.point.model.Span;
 
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -31,39 +33,6 @@ public class SpyImpl implements SpySPI {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private static Map<String, MethodAspect> createMethodAspectsMap(Map<String, MethodAspect> map) {
-        if (map == null) {
-            synchronized (SpyImpl.class) {
-                if (map == null) {
-                    return new HashMap<String, MethodAspect>();
-                }
-            }
-        }
-        return map;
-    }
-
-    private static Map<String, FrameworkAspect> createFrameworkAspectsMap(Map<String, FrameworkAspect> map) {
-        if (map == null) {
-            synchronized (SpyImpl.class) {
-                if (map == null) {
-                    return new HashMap<String, FrameworkAspect>();
-                }
-            }
-        }
-        return map;
-    }
-
-    private static Map<String, AsyncThreadAspect> createAsyncThreadAspectsMap(Map<String, AsyncThreadAspect> map) {
-        if (map == null) {
-            synchronized (SpyImpl.class) {
-                if (map == null) {
-                    return new HashMap<String, AsyncThreadAspect>();
-                }
-            }
-        }
-        return map;
     }
 
     @Override
@@ -148,4 +117,52 @@ public class SpyImpl implements SpySPI {
     private String[] splitMethodInfo(String methodInfo) {
         return methodInfo.split(Pattern.quote("|"));
     }
+
+
+    private static Map<String, MethodAspect> createMethodAspectsMap(Map<String, MethodAspect> map) {
+        if (map == null) {
+            synchronized (SpyImpl.class) {
+                if (map == null) {
+                    return new HashMap<String, MethodAspect>();
+                }
+            }
+        }
+        return map;
+    }
+
+    private static Map<String, FrameworkAspect> createFrameworkAspectsMap(Map<String, FrameworkAspect> map) {
+        if (map == null) {
+            synchronized (SpyImpl.class) {
+                if (map == null) {
+                    return new HashMap<String, FrameworkAspect>();
+                }
+            }
+        }
+        return map;
+    }
+
+    private static Map<String, AsyncThreadAspect> createAsyncThreadAspectsMap(Map<String, AsyncThreadAspect> map) {
+        if (map == null) {
+            synchronized (SpyImpl.class) {
+                if (map == null) {
+                    return new HashMap<String, AsyncThreadAspect>();
+                }
+            }
+        }
+        return map;
+    }
+
+/*
+    // 技术验证
+    public static void main(String[] args) {
+        init();
+        System.out.println("初始化完成");
+        Collection<FrameworkAspect> values = frameworkAspects.values();
+        for(FrameworkAspect frameworkAspect : values){
+            frameworkAspect.say();
+        }
+        System.out.println("输出结束");
+    }
+*/
+
 }

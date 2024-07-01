@@ -1,6 +1,7 @@
 package zql.CallRope.core.instrumentation;
 
 import javassist.*;
+import zql.CallRope.spi.annotation.SPIAuto;
 
 import java.io.IOException;
 import java.lang.reflect.Modifier;
@@ -8,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static zql.CallRope.core.util.JavassistUtils.isClassAtPackageJavaUtil;
-
+@SPIAuto
 public class JdkExecutorTtlTransformlet implements transformer {
     protected static final String RUNNABLE_CLASS_NAME = "java.lang.Runnable";
     protected static final String CALLABLE_CLASS_NAME = "java.util.concurrent.Callable";

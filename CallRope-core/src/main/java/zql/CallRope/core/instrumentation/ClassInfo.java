@@ -4,6 +4,7 @@ import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.LoaderClassPath;
 import javassist.NotFoundException;
+import zql.CallRope.spi.annotation.SPIAuto;
 
 import java.io.IOException;
 import java.security.ProtectionDomain;

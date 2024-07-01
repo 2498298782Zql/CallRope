@@ -3,6 +3,7 @@ package zql.CallRope.demo.spi;
 import zql.CallRope.point.SpySPI;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
 
@@ -25,8 +26,24 @@ public class test {
     }
 
     public static void main(String[] args) {
-        for(SayHi sayHi : services){
-            sayHi.say();
-        }
+        new Thread(()->{
+            for(SayHi sayHi : services){
+                sayHi.say();
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
+
+        new Thread(()->{
+            for(SayHi sayHi : services){
+                sayHi.say();
+            }
+        }).start();
+
+        Iterator<SayHi> iterator = services.iterator();
+
     }
 }

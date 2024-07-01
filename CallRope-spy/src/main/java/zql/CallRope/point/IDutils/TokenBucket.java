@@ -5,7 +5,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 
-// 暂不启动
+// 废弃
 public class TokenBucket {
     private final int capacity; // 桶的容量
     private final AtomicInteger tokens; // 当前令牌数量

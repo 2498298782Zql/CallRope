@@ -3,11 +3,12 @@ package zql.CallRope.core.instrumentation;
 import javassist.*;
 import javassist.bytecode.SignatureAttribute;
 import zql.CallRope.core.util.JavassistUtils;
+import zql.CallRope.spi.annotation.SPIAuto;
 
 import java.io.IOException;
 
 import static zql.CallRope.core.config.Configuration.getProperty;
-
+@SPIAuto
 public class SpringBootControllerTransformer implements transformer {
     public static String controller_package_prefix;
 

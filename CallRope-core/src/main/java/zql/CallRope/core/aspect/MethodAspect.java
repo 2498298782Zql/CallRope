@@ -1,7 +1,10 @@
 package zql.CallRope.core.aspect;
 
+import zql.CallRope.spi.annotation.SPI;
+
 import java.util.Map;
 
+@SPI
 public interface MethodAspect{
     void before(Class<?> clazz, String methodName, String methodDesc, Object target, Map<String,Object> infos) throws Throwable;
 

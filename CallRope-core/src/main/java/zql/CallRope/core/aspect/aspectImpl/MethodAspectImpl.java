@@ -1,12 +1,15 @@
 package zql.CallRope.core.aspect.aspectImpl;
 
 import zql.CallRope.core.aspect.MethodAspect;
+import zql.CallRope.spi.annotation.SPIAuto;
+
 import java.util.Map;
 
 
 /**
  * 加强普通方法
  */
+@SPIAuto
 public class MethodAspectImpl implements MethodAspect {
     @Override
     public void before(Class<?> clazz, String methodName, String methodDesc, Object target, Map<String,Object> infos) throws Throwable {

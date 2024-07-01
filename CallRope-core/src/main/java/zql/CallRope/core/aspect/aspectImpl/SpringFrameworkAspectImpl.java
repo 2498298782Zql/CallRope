@@ -7,9 +7,11 @@ import zql.CallRope.point.TraceInfos;
 import zql.CallRope.point.model.Span;
 import zql.CallRope.point.model.SpanBuilder;
 import zql.CallRope.point.model.SpanEnvironment;
+import zql.CallRope.spi.annotation.SPIAuto;
 
 import java.util.Map;
 
+@SPIAuto
 public class SpringFrameworkAspectImpl implements FrameworkAspect {
 
     private DisruptorProducer<Span> producer = DisruptorConfig.createProducer(DisruptorConfig.createConsumerListener());
@@ -31,5 +33,8 @@ public class SpringFrameworkAspectImpl implements FrameworkAspect {
         producer.onData(span);
         TraceInfos.spanTtl.remove();
         return span;
+    }
+    public void say(){
+        System.out.println("hi, i'm spring");
     }
 }

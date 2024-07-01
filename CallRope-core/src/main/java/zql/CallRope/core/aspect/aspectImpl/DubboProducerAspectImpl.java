@@ -8,9 +8,11 @@ import zql.CallRope.point.TraceInfos;
 import zql.CallRope.point.model.Span;
 import zql.CallRope.point.model.SpanBuilder;
 import zql.CallRope.point.model.SpanEnvironment;
+import zql.CallRope.spi.annotation.SPIAuto;
 
 import java.util.Map;
 
+@SPIAuto
 public class DubboProducerAspectImpl implements FrameworkAspect {
 
     private DisruptorProducer<Span> producer = DisruptorConfig.createProducer(DisruptorConfig.createConsumerListener());
@@ -32,4 +34,5 @@ public class DubboProducerAspectImpl implements FrameworkAspect {
         TraceInfos.spanTtl.remove();
         return null;
     }
+
 }

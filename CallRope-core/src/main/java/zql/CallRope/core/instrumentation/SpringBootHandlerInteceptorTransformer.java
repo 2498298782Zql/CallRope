@@ -1,11 +1,13 @@
 package zql.CallRope.core.instrumentation;
 
 import javassist.*;
+import zql.CallRope.spi.annotation.SPIAuto;
 
 import java.io.IOException;
 
 import static zql.CallRope.core.config.Configuration.getProperty;
 
+@SPIAuto
 public class SpringBootHandlerInteceptorTransformer implements transformer {
     public static final String HANDLER_INTECEPTOR;
 

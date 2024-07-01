@@ -4,6 +4,8 @@ import javassist.*;
 import zql.CallRope.core.aspect.SpyImpl;
 import zql.CallRope.core.instrumentation.dubbo.DubboConsumerFilterTransformer;
 import zql.CallRope.core.instrumentation.dubbo.DubboProducerFilterTransformer;
+import zql.CallRope.spi.SpiBs;
+import zql.CallRope.spi.api.IExtensionLoader;
 
 import java.io.IOException;
 import java.lang.instrument.ClassFileTransformer;
@@ -26,11 +28,15 @@ public class CallRopeClassfileTransformer implements ClassFileTransformer {
     }
 
     static {
-        transformerList.add(new SpringBootHandlerInteceptorTransformer());
-        transformerList.add(new SpringBootControllerTransformer());
-        transformerList.add(new JdkExecutorTtlTransformlet());
-        transformerList.add(new DubboProducerFilterTransformer());
-        transformerList.add(new DubboConsumerFilterTransformer());
+        init();
+    }
+
+    public static void init(){
+        IExtensionLoader<transformer> load = SpiBs.load(transformer.class, transformer.class.getClassLoader());
+        List<transformer> allExtension = load.getAllExtension();
+        for(transformer transformer: allExtension){
+            transformerList.add(transformer);
+        }
     }
 
     @Override
@@ -61,4 +67,14 @@ public class CallRopeClassfileTransformer implements ClassFileTransformer {
         }
         return classfileBuffer;
     }
+
+
+    // 技术验证
+    public static void main(String[] args) {
+        for(transformer transformer : transformerList){
+            System.out.println(transformer);
+        }
+        System.out.println("输出结束");
+    }
+
 }
